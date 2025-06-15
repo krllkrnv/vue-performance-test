@@ -1,37 +1,30 @@
 <template>
   <div class="update-test">
     <div class="info">
-      Тестирование обновлений: {{ size }} элементов | Обновлений: {{ totalUpdates }}
+      Циклическое обновление данных: {{ cycles }} циклов по {{ batchSize }} записей | Первичный размер: {{ size }}
     </div>
 
     <div class="stats" v-if="durations.length">
-      <p>Среднее обновление: {{ avgDuration.toFixed(2) }} мс</p>
-      <p>90-й перцентиль: {{ p90.toFixed(2) }} мс</p>
-      <p>Минимум: {{ minDuration.toFixed(2) }} мс, Максимум: {{ maxDuration.toFixed(2) }} мс</p>
+      <p>Средняя длительность пакета: {{ avgDuration.toFixed(2) }} мс</p>
+      <p>Медиана длительности: {{ medianDuration.toFixed(2) }} мс</p>
+      <p>Средний TBT: {{ avgTBT.toFixed(2) }} мс</p>
+      <p>Средний CLS: {{ avgCLS.toFixed(4) }}</p>
+      <p>Средний FPS: {{ avgFPS.toFixed(2) }}</p>
     </div>
 
-    <div class="progress" v-if="running">
-      <div class="progress-bar" :style="{ width: batchProgress + '%' }"></div>
-      <div class="progress-text">
-        Обновление {{ currentUpdate }}/{{ totalUpdates }}
-      </div>
-    </div>
-
-    <table v-if="visibleData.length">
+    <table v-if="data.length">
       <thead>
         <tr>
           <th>ID</th>
           <th>Name</th>
           <th>Value</th>
-          <th>Updates</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in visibleData" :key="item.id">
+        <tr v-for="item in data" :key="item.id">
           <td>{{ item.id }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.value.toFixed(2) }}</td>
-          <td>{{ item.updateCount }}</td>
         </tr>
       </tbody>
     </table>
@@ -39,94 +32,127 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, nextTick } from 'vue'
+import { ref, computed, onMounted, watch, nextTick, defineEmits } from 'vue'
 import { generateDataset, waitForRender } from '@/utils/perf'
 
 const props = defineProps({
-  size: {
-    type: Number,
-    required: true
-  }
+  size:      { type: Number, required: true },
+  batchSize: { type: Number, default: 100 },
+  cycles:    { type: Number, default: 10 }
 })
 const emit = defineEmits(['test-completed'])
 
-// Параметры теста
 const data = ref([])
-const visibleData = ref([])
 const durations = ref([])
+const tbtValues = ref([])
+const clsValues = ref([])
+const fpsValues = ref([])
 
-// Количество обновлений: 10% от размера
-const totalUpdates = computed(() => Math.max(1, Math.floor(props.size * 0.1)))
-
-// Счётчики прогресса
-const currentUpdate = ref(0)
-const running = ref(true)
-const batchProgress = computed(() => (currentUpdate.value / totalUpdates.value) * 100)
-
-// Метрики
-const avgDuration = computed(() => durations.value.reduce((a, b) => a + b, 0) / durations.value.length)
-const minDuration = computed(() => Math.min(...durations.value))
-const maxDuration = computed(() => Math.max(...durations.value))
-
-// Функция вычисления перцентиля
-function percentile(arr, q) {
+// Метрики вычисления
+const avg = arr => arr.reduce((a, b) => a + b, 0) / arr.length
+const median = arr => {
   const sorted = [...arr].sort((a, b) => a - b)
-  const idx = Math.floor((sorted.length - 1) * q)
-  return sorted[idx]
+  return sorted[Math.floor(sorted.length / 2)]
 }
 
-const p90 = computed(() => percentile(durations.value, 0.9))
+const avgDuration = computed(() => durations.value.length ? avg(durations.value) : 0)
+const medianDuration = computed(() => durations.value.length ? median(durations.value) : 0)
+const avgTBT = computed(() => tbtValues.value.length ? avg(tbtValues.value) : 0)
+const avgCLS = computed(() => clsValues.value.length ? avg(clsValues.value) : 0)
+const avgFPS = computed(() => fpsValues.value.length ? avg(fpsValues.value) : 0)
 
-// Основной тест
 async function runTest() {
-  // 1. Инициализация данных
-  data.value = generateDataset(props.size).map(item => ({ ...item, updateCount: 0 }))
-  visibleData.value = data.value.slice(0, Math.min(props.size, 100))
+  // Сброс предыдущих данных
+  data.value = []
+  durations.value = []
+  tbtValues.value = []
+  clsValues.value = []
+  fpsValues.value = []
+
+  // Первичный рендер
+  data.value = generateDataset(props.size)
   await waitForRender()
 
-  // 2. Обновления
-  for (let i = 0; i < totalUpdates.value; i++) {
-    currentUpdate.value = i + 1
-    const idx = Math.floor(Math.random() * props.size)
-
-    const start = performance.now()
-    data.value[idx].value = Math.random() * 100
-    data.value[idx].updateCount += 1
-    await nextTick()
-    await waitForRender()
-
-    const duration = performance.now() - start
-    durations.value.push(duration)
-
-    visibleData.value = data.value.slice(0, visibleData.value.length)
-  }
-
-  // 3. Логирование метрик
-  console.log(
-    `✅ Update test completed: ${props.size} items — ` +
-    `avg ${avgDuration.value.toFixed(2)}ms, ` +
-    `p90 ${p90.value.toFixed(2)}ms, ` +
-    `min ${minDuration.value.toFixed(2)}ms, ` +
-    `max ${maxDuration.value.toFixed(2)}ms`
-  )
-
-  // 4. Сохранение результатов
-  window.performanceResults.update.push({
-    size:         props.size,
-    totalUpdates: totalUpdates.value,
-    avgDuration:  avgDuration.value,
-    p90:          p90.value,
-    minDuration:  minDuration.value,
-    maxDuration:  maxDuration.value,
-    timestamp:    Date.now()
+  // Настройка PerformanceObserver для CLS и TBT
+  let clsCumulative = 0
+  const clsObserver = new PerformanceObserver(list => {
+    for (const entry of list.getEntries()) if (!entry.hadRecentInput) clsCumulative += entry.value
   })
+  clsObserver.observe({ type: 'layout-shift', buffered: true })
 
-  running.value = false
-  emit('test-completed')
+  let tbtCumulative = 0
+  const longTaskObserver = new PerformanceObserver(list => {
+    for (const entry of list.getEntries()) if (entry.duration > 50) tbtCumulative += entry.duration - 50
+  })
+  longTaskObserver.observe({ type: 'longtask', buffered: true })
+
+  // Настройка Frame Timing API для FPS
+  let frameCount = 0
+  const frameObserver = new PerformanceObserver(list => {
+    for (const entry of list.getEntries()) frameCount++
+  })
+  frameObserver.observe({ type: 'frame', buffered: true })
+
+  try {
+    // Циклические обновления
+    for (let i = 0; i < props.cycles; i++) {
+      const clsBefore = clsCumulative
+      const tbtBefore = tbtCumulative
+      const framesBefore = frameCount
+
+      performance.mark(`start-${i}`)
+      data.value = [...data.value, ...generateDataset(props.batchSize)]
+      await nextTick()
+      await waitForRender()
+      performance.mark(`end-${i}`)
+
+      performance.measure(`dur-${i}`, `start-${i}`, `end-${i}`)
+      const duration = performance.getEntriesByName(`dur-${i}`)[0].duration
+      durations.value.push(duration)
+
+      // Вычисление дельт метрик
+      const tbtDelta = tbtCumulative - tbtBefore
+      const clsDelta = clsCumulative - clsBefore
+      const fpsDelta = (frameCount - framesBefore) / (duration / 1000)
+
+      tbtValues.value.push(tbtDelta)
+      clsValues.value.push(clsDelta)
+      fpsValues.value.push(fpsDelta)
+
+      console.log(
+        `Update batch ${i + 1}/${props.cycles} for size ${props.size}: ` +
+        `${duration.toFixed(2)}ms, TBT ${tbtDelta.toFixed(2)}ms, ` +
+        `CLS ${clsDelta.toFixed(4)}, FPS ${fpsDelta.toFixed(2)}`
+      )
+    }
+
+    // Сохранение результатов
+    window.performanceResults.update.push({
+      size: props.size,
+      durations: [...durations.value],
+      tbt: [...tbtValues.value],
+      cls: [...clsValues.value],
+      fps: [...fpsValues.value]
+    })
+
+    console.log(
+      `Update test completed: size ${props.size}, ` +
+      `avg ${avgDuration.value.toFixed(2)}ms, p50 ${medianDuration.value.toFixed(2)}ms, ` +
+      `TBT ${avgTBT.value.toFixed(2)}ms, CLS ${avgCLS.value.toFixed(4)}, FPS ${avgFPS.value.toFixed(2)}`
+    )
+  } catch (error) {
+    console.error('Update test error:', error)
+  } finally {
+    // Отключаем наблюдателей
+    clsObserver.disconnect()
+    longTaskObserver.disconnect()
+    frameObserver.disconnect()
+    emit('test-completed')
+  }
 }
 
-
-onMounted(() => runTest())
+onMounted(runTest)
+watch(() => props.size, runTest)
 </script>
 
 <style scoped>
@@ -145,31 +171,6 @@ onMounted(() => runTest())
 }
 .stats p {
   margin: 5px 0;
-}
-.progress {
-  margin-bottom: 15px;
-  background-color: #f0f0f0;
-  border-radius: 4px;
-  overflow: hidden;
-  position: relative;
-}
-.progress-bar {
-  height: 20px;
-  background-color: #3498db;
-  transition: width 0.3s ease;
-}
-.progress-text {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  color: #fff;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
 }
 table {
   width: 100%;

@@ -1,24 +1,15 @@
 <template>
   <div class="interaction-test">
     <div class="info">
-      Тестирование взаимодействий: {{ size }} элементов
+      Тест интерактивности: {{ size }} элементов — Действий: {{ totalActions }}
     </div>
 
-    <div class="controls">
-      <button @click="sortById">Сортировать по ID</button>
-      <button @click="sortByName">Сортировать по имени</button>
-      <button @click="sortByValue">Сортировать по значению</button>
-      <button @click="filterByCategory">Фильтровать по категории</button>
-      <button @click="resetData">Сбросить</button>
-    </div>
-
-    <table v-if="filteredData.length">
+    <table v-if="data.length">
       <thead>
         <tr>
           <th>ID</th>
           <th>Name</th>
           <th>Value</th>
-          <th>Category</th>
         </tr>
       </thead>
       <tbody>
@@ -26,7 +17,6 @@
           <td>{{ item.id }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.value.toFixed(2) }}</td>
-          <td>{{ item.category }}</td>
         </tr>
       </tbody>
     </table>
@@ -34,166 +24,77 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, onMounted, nextTick, computed } from 'vue'
 import { generateDataset, waitForRender } from '@/utils/perf'
 
-const props = defineProps({
-  size: {
-    type: Number,
-    required: true
-  }
-})
+const props = defineProps({ size: { type: Number, required: true } })
+const emit = defineEmits(['test-completed'])
 
-const originalData = ref([])
-const filteredData = ref([])
+// Данные и результаты
+const data = ref([])
 const visibleData = ref([])
-const currentCategory = ref('')
-const testCompleted = ref(false)
+const results = ref([])
 
-// Инициализация данных
-const initializeData = () => {
-  originalData.value = generateDataset(props.size)
-  filteredData.value = [...originalData.value]
-  visibleData.value = [...filteredData.value.slice(0, 100)]
-  currentCategory.value = ''
-}
+// Параметры теста
+const filterValues = ['a', 'b', 'c', 'd', 'e']
+const totalActions = computed(() => filterValues.length * 2 + filterValues.length)
 
-// Функция измерения времени операции
-const measureInteraction = async (operation) => {
-  const startTime = performance.now()
-  await operation()
+// Функции действий
+async function measureAction(name, actionFn) {
+  performance.mark(`${name}-start`)
+  await actionFn()
   await waitForRender()
-  return performance.now() - startTime
+  performance.mark(`${name}-end`)
+  performance.measure(name, `${name}-start`, `${name}-end`)
+  const measure = performance.getEntriesByName(name).pop()
+  console.log(`${name}: ${measure.duration.toFixed(2)}ms`)
+  results.value.push({ action: name, duration: measure.duration, timestamp: Date.now() })
+  performance.clearMarks()
+  performance.clearMeasures()
 }
 
-// Операции взаимодействия
-const sortById = async () => {
-  const duration = await measureInteraction(() => {
-    filteredData.value.sort((a, b) => a.id - b.id)
-  })
-  saveResult('sort', 'id', duration)
-}
+// Последовательность действий: фильтрация, сортировка, разворачивание (toggle)
+async function runTest() {
+  // 1. Инициализация
+  data.value = generateDataset(props.size)
+  visibleData.value = data.value.slice(0, 100)
+  await waitForRender()
 
-const sortByName = async () => {
-  const duration = await measureInteraction(() => {
-    filteredData.value.sort((a, b) => a.name.localeCompare(b.name))
-  })
-  saveResult('sort', 'name', duration)
-}
-
-const sortByValue = async () => {
-  const duration = await measureInteraction(() => {
-    filteredData.value.sort((a, b) => a.value - b.value)
-  })
-  saveResult('sort', 'value', duration)
-}
-
-const filterByCategory = async () => {
-  const categories = [...new Set(originalData.value.map(item => item.category))]
-  const randomCategory = categories[Math.floor(Math.random() * categories.length)]
-
-  const duration = await measureInteraction(() => {
-    filteredData.value = originalData.value.filter(item => item.category === randomCategory)
-    currentCategory.value = randomCategory
-  })
-
-  saveResult('filter', `category: ${randomCategory}`, duration)
-}
-
-const resetData = async () => {
-  const duration = await measureInteraction(() => {
-    filteredData.value = [...originalData.value]
-    currentCategory.value = ''
-  })
-  saveResult('reset', 'all data', duration)
-}
-
-// Сохранение результатов
-const saveResult = (type, field, duration) => {
-  if (!window.performanceResults.interaction) {
-    window.performanceResults.interaction = []
+  // 2. Последовательные фильтрации и сортировки
+  for (const val of filterValues) {
+    await measureAction('filter', async () => {
+      visibleData.value = data.value.filter(item => item.name.includes(val)).slice(0, 100)
+      await nextTick()
+    })
+    await measureAction('sort', async () => {
+      visibleData.value.sort((a, b) => a.value - b.value)
+      await nextTick()
+    })
   }
 
-  window.performanceResults.interaction.push({
-    size: props.size,
-    operation: type,
-    target: field,
-    duration,
-    itemsAffected: type === 'filter' ? filteredData.value.length : props.size,
-    timestamp: Date.now()
-  })
-}
-
-// Основная функция тестирования
-const runTest = async () => {
-  try {
-    // 1. Инициализация данных
-    initializeData()
-    await waitForRender()
-
-    // 2. Выполняем серию взаимодействий
-    await sortById()
-    await sortByName()
-    await sortByValue()
-    await filterByCategory()
-    await resetData()
-
-    console.log(`Interaction test completed for ${props.size} items`)
-
-  } catch (error) {
-    console.error('Interaction test error:', error)
-  } finally {
-    testCompleted.value = true
-    // Сигнализируем о завершении теста
-    if (window.testCompleted) {
-      window.testCompleted()
-    }
+  // 3. Toggle details emulation: expand first 10 items
+  for (let i = 0; i < 10 && i < visibleData.value.length; i++) {
+    const id = visibleData.value[i].id
+    await measureAction(`toggle-${id}`, async () => {
+      // эмулируем раскрытие деталей
+      // не меняем visibleData, просто force update
+      await nextTick()
+    })
   }
+
+  // Сохранение
+  window.performanceResults.interaction = results.value
+  emit('test-completed')
 }
 
-onMounted(async () => {
-  // Запускаем тест при монтировании
-  await runTest()
-})
+onMounted(runTest)
 </script>
 
 <style scoped>
-.interaction-test {
-  margin: 20px 0;
-  padding: 15px;
-  border: 1px solid #eee;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-}
-
-.info {
-  font-weight: bold;
-  margin-bottom: 15px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #ddd;
-}
-
-.controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-.controls button {
-  padding: 8px 15px;
-  background-color: #3498db;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s;
-}
-
-.controls button:hover {
-  background-color: #2980b9;
-}
-
-/* Остальные стили таблицы аналогичны предыдущим компонентам */
+.interaction-test { margin: 20px 0; padding: 15px; border: 1px solid #eee; border-radius: 8px; background-color: #f9f9f9; }
+.info { font-weight: bold; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #ddd; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { padding: 8px 12px; border: 1px solid #ddd; text-align: left; }
+th { background-color: #f2f2f2; }
+tr:nth-child(even) { background-color: #f8f8f8; }
 </style>

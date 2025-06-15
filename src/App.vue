@@ -34,8 +34,9 @@
 <script setup>
 import { ref, computed, onMounted, markRaw, nextTick } from 'vue'
 import RenderTest from './components/RenderTest.vue'
-import UpdateTest from './components/UpdateTest.vue' // Импорт нового компонента
-
+import UpdateTest from './components/UpdateTest.vue'
+import InteractionTest
+ from './components/InteractionTest.vue'
 // Конфигурация тестов с markRaw
 const tests = [
   {
@@ -46,8 +47,13 @@ const tests = [
   {
     id: 'update',
     name: 'Тест обновлений',
-    component: markRaw(UpdateTest) // Добавление нового теста
-  }
+    component: markRaw(UpdateTest)
+  },
+   /*  {
+    id: 'interaction',
+    name: 'Тест взаимодействий',
+    component: markRaw(InteractionTest)
+  } */
 ]
 
 const testSizes = [100, 1000, 5000, 10000]
@@ -110,7 +116,8 @@ const runNextTest = async () => {
 const runAllTests = () => {
   window.performanceResults = {
     render: [],
-    update: [] // Добавлено хранилище для результатов UpdateTest
+    update: [],
+    interaction: []
   }
   window.allTestsCompleted = false
   window.testStatus = {

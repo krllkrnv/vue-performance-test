@@ -49,11 +49,11 @@ const tests = [
     name: 'Тест обновлений',
     component: markRaw(UpdateTest)
   },
-   /*  {
+    {
     id: 'interaction',
     name: 'Тест взаимодействий',
     component: markRaw(InteractionTest)
-  } */
+  }
 ]
 
 const testSizes = [100, 1000, 5000, 10000]

@@ -1,0 +1,10 @@
+# Файл: docker-compose.yml
+version: '3.8'
+
+services:
+  tester:
+    build: .
+    volumes:
+      - ./results:/app/results
+    environment:
+      - NODE_ENV=production

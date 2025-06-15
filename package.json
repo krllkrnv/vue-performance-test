@@ -1,0 +1,20 @@
+{
+  "name": "vue-perf-research",
+  "type": "module",
+  "scripts": {
+    "serve": "vite",
+    "test:e2e": "node tests/e2e/runner.js"
+  },
+  "dependencies": {
+    "vue": "^3.4.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
+    "chart.js": "^4.0.0",
+    "chartjs-node-canvas": "^5.0.0",
+    "fs-extra": "^11.2.0",
+    "puppeteer": "^22.0.0",
+    "vite": "^5.2.0",
+    "vite-plugin-vue-devtools": "^7.7.7"
+  }
+}

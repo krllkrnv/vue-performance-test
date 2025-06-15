@@ -1,15 +1,23 @@
 <template>
   <div class="update-test">
     <div class="info">
-      Тестирование обновлений: {{ size }} элементов | Обновлений: {{ updateCount }}
+      Тестирование обновлений: {{ size }} элементов | Обновлений: {{ totalUpdates }}
     </div>
-    <div class="progress" v-if="testRunning">
+
+    <div class="stats" v-if="durations.length">
+      <p>Среднее обновление: {{ avgDuration.toFixed(2) }} мс</p>
+      <p>90-й перцентиль: {{ p90.toFixed(2) }} мс</p>
+      <p>Минимум: {{ minDuration.toFixed(2) }} мс, Максимум: {{ maxDuration.toFixed(2) }} мс</p>
+    </div>
+
+    <div class="progress" v-if="running">
       <div class="progress-bar" :style="{ width: batchProgress + '%' }"></div>
       <div class="progress-text">
-        Пакет {{ currentBatch }}/{{ totalBatches }} ({{ updatesPerBatch }} элементов)
+        Обновление {{ currentUpdate }}/{{ totalUpdates }}
       </div>
     </div>
-    <table v-if="data.length">
+
+    <table v-if="visibleData.length">
       <thead>
         <tr>
           <th>ID</th>
@@ -31,7 +39,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, defineEmits, defineProps, computed } from 'vue'
+import { ref, computed, onMounted, nextTick } from 'vue'
 import { generateDataset, waitForRender } from '@/utils/perf'
 
 const props = defineProps({
@@ -40,120 +48,85 @@ const props = defineProps({
     required: true
   }
 })
-
 const emit = defineEmits(['test-completed'])
 
+// Параметры теста
 const data = ref([])
 const visibleData = ref([])
-const updateCount = ref(0)
-const testRunning = ref(true)
-const currentBatch = ref(0)
-const totalBatches = 20
-const updatesPerBatch = computed(() => Math.max(1, Math.floor(props.size * 0.1)))
+const durations = ref([])
 
-// Прогресс выполнения текущего теста
-const batchProgress = computed(() => (currentBatch.value / totalBatches) * 100)
+// Количество обновлений: 10% от размера
+const totalUpdates = computed(() => Math.max(1, Math.floor(props.size * 0.1)))
 
-// Функция обновления случайных элементов
-const updateRandomItems = async (count) => {
-  const indexes = []
-  for (let i = 0; i < count; i++) {
-    indexes.push(Math.floor(Math.random() * props.size))
-  }
+// Счётчики прогресса
+const currentUpdate = ref(0)
+const running = ref(true)
+const batchProgress = computed(() => (currentUpdate.value / totalUpdates.value) * 100)
 
-  indexes.forEach(index => {
-    if (data.value[index]) {
-      data.value[index] = {
-        ...data.value[index],
-        value: Math.random() * 100,
-        updateCount: data.value[index].updateCount + 1
-      }
-    }
-  })
+// Метрики
+const avgDuration = computed(() => durations.value.reduce((a, b) => a + b, 0) / durations.value.length)
+const minDuration = computed(() => Math.min(...durations.value))
+const maxDuration = computed(() => Math.max(...durations.value))
 
-  // Обновляем видимые данные для реактивности
-  visibleData.value = [...data.value.slice(0, 100)]
+// Функция вычисления перцентиля
+function percentile(arr, q) {
+  const sorted = [...arr].sort((a, b) => a - b)
+  const idx = Math.floor((sorted.length - 1) * q)
+  return sorted[idx]
 }
 
-// Основная функция тестирования
-const runTest = async () => {
-  try {
-    // 1. Инициализация данных
-    testRunning.value = true
-    currentBatch.value = 0
-    data.value = generateDataset(props.size).map(item => ({
-      ...item,
-      updateCount: 0
-    }))
-    visibleData.value = [...data.value.slice(0, 100)]
-    updateCount.value = 0
+const p90 = computed(() => percentile(durations.value, 0.9))
 
+// Основной тест
+async function runTest() {
+  // 1. Инициализация данных
+  data.value = generateDataset(props.size).map(item => ({ ...item, updateCount: 0 }))
+  visibleData.value = data.value.slice(0, Math.min(props.size, 100))
+  await waitForRender()
+
+  // 2. Обновления
+  for (let i = 0; i < totalUpdates.value; i++) {
+    currentUpdate.value = i + 1
+    const idx = Math.floor(Math.random() * props.size)
+
+    const start = performance.now()
+    data.value[idx].value = Math.random() * 100
+    data.value[idx].updateCount += 1
+    await nextTick()
     await waitForRender()
 
-    // 2. Замер производительности обновлений
-    const testStart = performance.now()
-    const updateDurations = []
+    const duration = performance.now() - start
+    durations.value.push(duration)
 
-    // 3. Выполняем серию обновлений
-    for (let i = 0; i < totalBatches; i++) {
-      currentBatch.value = i + 1
-      const batchStart = performance.now()
-
-      // Обновляем данные
-      await updateRandomItems(updatesPerBatch.value)
-      updateCount.value += updatesPerBatch.value
-
-      // Ждем рендеринга
-      await waitForRender()
-
-      // Фиксируем время
-      const batchDuration = performance.now() - batchStart
-      updateDurations.push(batchDuration)
-
-      // Небольшая пауза между пакетами
-      await new Promise(resolve => setTimeout(resolve, 50))
-    }
-
-    // 4. Расчет метрик
-    const totalDuration = performance.now() - testStart
-    const avgDuration = updateDurations.reduce((sum, d) => sum + d, 0) / updateDurations.length
-    const minDuration = Math.min(...updateDurations)
-    const maxDuration = Math.max(...updateDurations)
-    const memoryUsed = performance.memory?.usedJSHeapSize || 0
-
-    // 5. Сохранение результатов
-    if (!window.performanceResults.update) {
-      window.performanceResults.update = []
-    }
-
-    window.performanceResults.update.push({
-      size: props.size,
-      batches: totalBatches,
-      updatesPerBatch: updatesPerBatch.value,
-      totalUpdates: totalBatches * updatesPerBatch.value,
-      totalDuration,
-      avgDuration,
-      minDuration,
-      maxDuration,
-      memory: memoryUsed,
-      timestamp: Date.now()
-    })
-
-    console.log(`✅ Update test completed: ${props.size} items, ${totalDuration.toFixed(2)}ms total`)
-
-  } catch (error) {
-    console.error('❌ Update test error:', error)
-  } finally {
-    testRunning.value = false
-    // Сигнализируем о завершении теста
-    emit('test-completed')
+    visibleData.value = data.value.slice(0, visibleData.value.length)
   }
+
+  // 3. Логирование метрик
+  console.log(
+    `✅ Update test completed: ${props.size} items — ` +
+    `avg ${avgDuration.value.toFixed(2)}ms, ` +
+    `p90 ${p90.value.toFixed(2)}ms, ` +
+    `min ${minDuration.value.toFixed(2)}ms, ` +
+    `max ${maxDuration.value.toFixed(2)}ms`
+  )
+
+  // 4. Сохранение результатов
+  window.performanceResults.update.push({
+    size:         props.size,
+    totalUpdates: totalUpdates.value,
+    avgDuration:  avgDuration.value,
+    p90:          p90.value,
+    minDuration:  minDuration.value,
+    maxDuration:  maxDuration.value,
+    timestamp:    Date.now()
+  })
+
+  running.value = false
+  emit('test-completed')
 }
 
-onMounted(async () => {
-  // Запускаем тест при монтировании
-  await runTest()
-})
+
+onMounted(() => runTest())
 </script>
 
 <style scoped>
@@ -163,16 +136,16 @@ onMounted(async () => {
   border: 1px solid #eee;
   border-radius: 8px;
   background-color: #f9f9f9;
-  position: relative;
 }
-
 .info {
   font-weight: bold;
   margin-bottom: 15px;
   padding-bottom: 10px;
   border-bottom: 1px solid #ddd;
 }
-
+.stats p {
+  margin: 5px 0;
+}
 .progress {
   margin-bottom: 15px;
   background-color: #f0f0f0;
@@ -180,13 +153,11 @@ onMounted(async () => {
   overflow: hidden;
   position: relative;
 }
-
 .progress-bar {
   height: 20px;
   background-color: #3498db;
   transition: width 0.3s ease;
 }
-
 .progress-text {
   position: absolute;
   top: 0;
@@ -200,25 +171,21 @@ onMounted(async () => {
   color: #fff;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
 }
-
 table {
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
   margin-top: 15px;
 }
-
 th, td {
   padding: 8px 12px;
   text-align: left;
   border: 1px solid #ddd;
 }
-
 th {
   background-color: #f2f2f2;
   font-weight: bold;
 }
-
 tr:nth-child(even) {
   background-color: #f8f8f8;
 }

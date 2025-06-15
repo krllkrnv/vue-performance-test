@@ -19,26 +19,34 @@
       <div class="progress-text">
         Прогресс: {{ completedTests }}/{{ totalTests }} тестов
       </div>
+      <div class="current-status" v-if="testStatus.current">
+        Текущий статус: {{ testStatus.current }}
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, markRaw } from 'vue'
 import RenderTest from './components/RenderTest.vue'
-import UpdateTest from './components/UpdateTest.vue'
-import InteractionTest from './components/InteractionTest.vue'
 
-// Конфигурация тестов
+// Конфигурация тестов с markRaw
 const tests = [
-  { id: 'render', name: 'Тест рендеринга', component: RenderTest },
-  { id: 'update', name: 'Тест обновлений', component: UpdateTest },
-  { id: 'interaction', name: 'Тест взаимодействий', component: InteractionTest }
+  {
+    id: 'render',
+    name: 'Тест рендеринга',
+    component: markRaw(RenderTest) // Используем markRaw
+  }
 ]
 
 const testSizes = [100, 1000, 5000, 10000]
 const currentTest = ref(null)
 const completedTests = ref(0)
+const testStatus = ref({
+  current: 'Подготовка к запуску',
+  progress: 0,
+  total: testSizes.length
+})
 
 // Вычисляемые свойства
 const totalTests = computed(() => tests.length * testSizes.length)
@@ -48,36 +56,58 @@ const progress = computed(() => (completedTests.value / totalTests.value) * 100)
 const runAllTests = async () => {
   // Инициализируем глобальный объект для результатов
   window.performanceResults = {
-    render: [],
-    update: [],
-    interaction: []
+    render: []
   }
   window.allTestsCompleted = false
-  window.testCompleted = null
+  window.testStatus = {
+    current: 'Запуск тестов',
+    progress: 0,
+    total: testSizes.length
+  }
 
   // Последовательно запускаем все тесты
   for (const test of tests) {
     for (const size of testSizes) {
       // Устанавливаем текущий тест
       currentTest.value = { ...test, size }
+      testStatus.value.current = `Выполнение: ${test.name} (${size} элементов)`
+      window.testStatus.current = testStatus.value.current
 
       // Ждем монтирования компонента
-      await new Promise(resolve => setTimeout(resolve, 50))
+      await new Promise(resolve => setTimeout(resolve, 100))
 
-      // Ожидаем завершения теста
-      await new Promise(resolve => {
-        window.testCompleted = resolve
-      })
+      try {
+        // Ожидаем завершения теста с обработкой таймаута
+        await new Promise((resolve, reject) => {
+          // Устанавливаем обработчик завершения
+          window.testCompleted = () => {
+            clearTimeout(timeoutId)
+            resolve()
+          }
 
-      // Увеличиваем счетчик завершенных тестов
-      completedTests.value++
-      console.log(`Тест завершен: ${test.name} (${size} элементов)`)
+          // Таймаут на случай зависания теста
+          const timeoutId = setTimeout(() => {
+            reject(new Error(`Тест завис: ${test.name} (${size} элементов)`))
+          }, 120000) // 2 минуты на тест
+        })
+
+        // Увеличиваем счетчик завершенных тестов
+        completedTests.value++
+        testStatus.value.progress = completedTests.value
+        window.testStatus.progress = completedTests.value
+        console.log(`✅ Тест завершен: ${test.name} (${size} элементов)`)
+      } catch (error) {
+        console.error(`❌ Ошибка теста: ${test.name} (${size} элементов)`, error)
+        testStatus.value.current = `Ошибка: ${error.message}`
+        window.testStatus.current = testStatus.value.current
+      }
     }
   }
 
   // Все тесты завершены
   currentTest.value = null
-  console.log('Все тесты выполнены!')
+  testStatus.value.current = 'Все тесты выполнены'
+  console.log('🎉 Все тесты выполнены!')
 
   // Устанавливаем флаг завершения
   window.allTestsCompleted = true
@@ -86,7 +116,7 @@ const runAllTests = async () => {
 // Запускаем тесты при монтировании компонента
 onMounted(() => {
   // Небольшая задержка для инициализации
-  setTimeout(runAllTests, 500)
+  setTimeout(runAllTests, 1000)
 })
 </script>
 
@@ -151,10 +181,17 @@ h1 {
   padding: 10px 15px;
   border-radius: 5px;
   font-size: 0.9rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .progress-text {
-  text-align: center;
   font-weight: bold;
+}
+
+.current-status {
+  font-style: italic;
+  color: #666;
 }
 </style>

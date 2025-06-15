@@ -1,9 +1,18 @@
-# Файл: docker-compose.yml
 version: '3.8'
-
 services:
+  frontend:
+    build: .
+    command: npm run serve
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./:/app
+      - /app/node_modules
+
   tester:
     build: .
+    depends_on:
+      - frontend
     volumes:
       - ./results:/app/results
     environment:

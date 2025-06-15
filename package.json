@@ -1,10 +1,11 @@
 {
   "name": "vue-perf-research",
   "type": "module",
-  "scripts": {
-    "serve": "vite",
-    "test:e2e": "node tests/e2e/runner.js"
-  },
+"scripts": {
+  "serve": "vite --host",
+  "test:e2e": "node tests/e2e/runner.js"
+}
+,
   "dependencies": {
     "vue": "^3.4.1"
   },

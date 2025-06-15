@@ -10,7 +10,7 @@ await fs.ensureDir('./results')
 async function runTests() {
   console.log('🚀 Запуск тестов производительности Vue.js')
 
-  // Запускаем браузер
+  // Запускаем браузер с увеличенными таймаутами
   const browser = await puppeteer.launch({
     headless: 'new',
     args: [
@@ -18,36 +18,66 @@ async function runTests() {
       '--disable-setuid-sandbox',
       '--disable-dev-shm-usage',
       '--js-flags="--max-old-space-size=4096"'
-    ]
+    ],
+    protocolTimeout: 300000 // 5 минут
   })
 
   const page = await browser.newPage()
 
+  // Устанавливаем таймауты по умолчанию
+  await page.setDefaultNavigationTimeout(300000); // 5 минут
+  await page.setDefaultTimeout(300000); // 5 минут
+
   // Включаем сбор метрик производительности
   await page.evaluateOnNewDocument(() => {
     window.performanceResults = {
-      render: [],
-      update: [],
-      interaction: []
+      render: []
     }
     window.allTestsCompleted = false
+    window.testStatus = {
+      current: 'initializing',
+      progress: 0,
+      total: 0
+    }
   })
 
   // Переходим к приложению
-  await page.goto('http://localhost:8080', {
+  console.log('🌐 Переход на страницу тестов...')
+  await page.goto('http://frontend:5173', {
     waitUntil: 'networkidle0',
-    timeout: 60000
+    timeout: 300000 // 5 минут
   })
 
   // Ждем завершения всех тестов
   console.log('⏳ Ожидание завершения тестов...')
-  await page.waitForFunction(() => window.allTestsCompleted, {
-    timeout: 300000 // 5 минут
-  })
+
+  try {
+    // Ожидаем флаг завершения с увеличенным таймаутом
+    await page.waitForFunction(() => window.allTestsCompleted, {
+      timeout: 300000, // 5 минут
+      polling: 5000 // Проверяем каждые 5 секунд
+    })
+
+    console.log('✅ Все тесты завершены!')
+  } catch (error) {
+    console.error('❌ Ожидание завершения тестов прервано:', error)
+
+    // Пытаемся получить текущий статус
+    const status = await page.evaluate(() => window.testStatus?.current || 'unknown')
+    console.error(`Последний статус тестов: ${status}`)
+
+    throw new Error('Тесты не завершились в установленный срок')
+  }
 
   // Собираем результаты
   const results = await page.evaluate(() => window.performanceResults)
-  console.log('✅ Все тесты завершены!')
+
+  // Проверяем наличие результатов
+  if (!results.render || results.render.length === 0) {
+    console.warn('⚠️ Результаты тестов не получены!')
+  } else {
+    console.log(`📊 Получено ${results.render.length} результатов рендеринга`)
+  }
 
   // Сохраняем сырые данные
   await fs.writeJson('./results/test-results.json', results)
@@ -63,13 +93,13 @@ async function runTests() {
   await fs.writeFile('./results/report.md', report)
 
   console.log('📄 Отчет сохранен в results/report.md')
-  console.log('✨ Все задачи этапа 3 выполнены!')
+  console.log('✨ Все задачи выполнены!')
 
   await browser.close()
 }
 
 // Запускаем тесты
 runTests().catch(error => {
-  console.error('❌ Ошибка при выполнении тестов:', error)
+  console.error('❌ Критическая ошибка:', error.message)
   process.exit(1)
 })

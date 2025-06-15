@@ -1,13 +1,12 @@
-import { CanvasRenderService } from 'chartjs-node-canvas'
+import { ChartJSNodeCanvas } from 'chartjs-node-canvas'
 import fs from 'fs-extra'
 
 // Конфигурация рендерера
 const width = 1200
 const height = 800
-const canvasRenderService = new CanvasRenderService(width, height)
+const chartJSNodeCanvas = new ChartJSNodeCanvas({ width, height })
 
 export async function generateCharts(results) {
-  // График для теста рендеринга
   await generateChart(
     results.render,
     'Размер набора данных',
@@ -18,7 +17,6 @@ export async function generateCharts(results) {
     d => d.duration
   )
 
-  // График для теста обновлений
   await generateChart(
     results.update,
     'Размер набора данных',
@@ -29,7 +27,6 @@ export async function generateCharts(results) {
     d => d.avgDuration
   )
 
-  // График для теста взаимодействий
   await generateChart(
     results.interaction,
     'Размер набора данных',
@@ -47,7 +44,6 @@ export async function generateCharts(results) {
 async function generateChart(data, xLabel, yLabel, title, filename, getX, getY) {
   if (!data.length) return
 
-  // Группируем данные по размеру
   const grouped = {}
   data.forEach(item => {
     const key = getX(item)
@@ -55,7 +51,6 @@ async function generateChart(data, xLabel, yLabel, title, filename, getX, getY) 
     grouped[key].push(getY(item))
   })
 
-  // Рассчитываем средние значения
   const labels = []
   const values = []
 
@@ -68,11 +63,10 @@ async function generateChart(data, xLabel, yLabel, title, filename, getX, getY) 
       values.push(avg)
     })
 
-  // Конфигурация графика
   const configuration = {
     type: 'bar',
     data: {
-      labels: labels,
+      labels,
       datasets: [{
         label: yLabel,
         data: values,
@@ -93,7 +87,7 @@ async function generateChart(data, xLabel, yLabel, title, filename, getX, getY) 
         },
         tooltip: {
           callbacks: {
-            label: (context) => `${context.dataset.label}: ${context.parsed.y.toFixed(2)} мс`
+            label: context => `${context.dataset.label}: ${context.parsed.y.toFixed(2)} мс`
           }
         }
       },
@@ -108,7 +102,7 @@ async function generateChart(data, xLabel, yLabel, title, filename, getX, getY) 
             }
           },
           ticks: {
-            callback: (value) => `${value} мс`
+            callback: value => `${value} мс`
           }
         },
         x: {
@@ -124,8 +118,7 @@ async function generateChart(data, xLabel, yLabel, title, filename, getX, getY) 
     }
   }
 
-  // Рендерим график в изображение
-  const image = await canvasRenderService.renderToBuffer(configuration)
+  const image = await chartJSNodeCanvas.renderToBuffer(configuration)
   await fs.writeFile(`./results/${filename}`, image)
   console.log(`📈 График сохранен: results/${filename}`)
 }

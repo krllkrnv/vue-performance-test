@@ -25,13 +25,15 @@ async function runTests() {
   const page = await browser.newPage()
 
   // Устанавливаем таймауты по умолчанию
-  await page.setDefaultNavigationTimeout(300000); // 5 минут
-  await page.setDefaultTimeout(300000); // 5 минут
+  await page.setDefaultNavigationTimeout(300000) // 5 минут
+  await page.setDefaultTimeout(300000) // 5 минут
 
   // Включаем сбор метрик производительности
   await page.evaluateOnNewDocument(() => {
     window.performanceResults = {
-      render: []
+      render: [],
+      update: [],
+      interaction: []
     }
     window.allTestsCompleted = false
     window.testStatus = {
@@ -64,37 +66,61 @@ async function runTests() {
 
     // Пытаемся получить текущий статус
     const status = await page.evaluate(() => window.testStatus?.current || 'unknown')
-    console.error(`Последний статус тестов: ${status}`)
+    const progress = await page.evaluate(() => window.testStatus?.progress || 0)
+    const total = await page.evaluate(() => window.testStatus?.total || 1)
 
-    throw new Error('Тесты не завершились в установленный срок')
+    console.error(`Последний статус тестов: ${status}`)
+    console.error(`Прогресс выполнения: ${progress}/${total} тестов`)
+
+    // Сохраняем частичные результаты, если есть
+    const partialResults = await page.evaluate(() => window.performanceResults)
+    if (Object.keys(partialResults).length > 0) {
+      await fs.writeJson('./results/partial-results.json', partialResults)
+      console.log('💾 Частичные результаты сохранены в results/partial-results.json')
+    }
+
+    throw new Error(`Тесты не завершились в установленный срок. Последний статус: ${status}`)
   }
 
   // Собираем результаты
   const results = await page.evaluate(() => window.performanceResults)
 
   // Проверяем наличие результатов
-  if (!results.render || results.render.length === 0) {
-    console.warn('⚠️ Результаты тестов не получены!')
-  } else {
+  let hasResults = false
+  if (results.render && results.render.length > 0) {
     console.log(`📊 Получено ${results.render.length} результатов рендеринга`)
+    hasResults = true
+  } else {
+    console.warn('⚠️ Результаты тестов рендеринга не получены!')
+  }
+
+  if (results.update && results.update.length > 0) {
+    console.log(`📊 Получено ${results.update.length} результатов обновлений`)
+    hasResults = true
+  } else {
+    console.warn('⚠️ Результаты тестов обновлений не получены!')
   }
 
   // Сохраняем сырые данные
-  await fs.writeJson('./results/test-results.json', results)
-  console.log('💾 Результаты сохранены в results/test-results.json')
+  if (hasResults) {
+    await fs.writeJson('./results/test-results.json', results)
+    console.log('💾 Результаты сохранены в results/test-results.json')
 
-  // Генерируем графики
-  console.log('📊 Генерация графиков...')
-  await generateCharts(results)
+    // Генерируем графики
+    console.log('📊 Генерация графиков...')
+    await generateCharts(results)
 
-  // Генерируем отчет
-  console.log('📝 Генерация отчета...')
-  const report = generateReport(results)
-  await fs.writeFile('./results/report.md', report)
+    // Генерируем отчет
+    console.log('📝 Генерация отчета...')
+    const report = generateReport(results)
+    await fs.writeFile('./results/report.md', report)
 
-  console.log('📄 Отчет сохранен в results/report.md')
+    console.log('📄 Отчет сохранен в results/report.md')
+  } else {
+    console.error('❌ Нет результатов для сохранения!')
+  }
+
   console.log('✨ Все задачи выполнены!')
-
   await browser.close()
 }
 

@@ -34,6 +34,7 @@
 <script setup>
 import { ref, computed, onMounted, markRaw, nextTick } from 'vue'
 import RenderTest from './components/RenderTest.vue'
+import UpdateTest from './components/UpdateTest.vue' // Импорт нового компонента
 
 // Конфигурация тестов с markRaw
 const tests = [
@@ -41,12 +42,17 @@ const tests = [
     id: 'render',
     name: 'Тест рендеринга',
     component: markRaw(RenderTest)
+  },
+  {
+    id: 'update',
+    name: 'Тест обновлений',
+    component: markRaw(UpdateTest) // Добавление нового теста
   }
 ]
 
 const testSizes = [100, 1000, 5000, 10000]
 const currentTest = ref(null)
-const currentTestKey = ref(0) // Ключ для принудительного пересоздания компонента
+const currentTestKey = ref(0)
 const completedTests = ref(0)
 const testStatus = ref({
   current: 'Подготовка к запуску',
@@ -71,33 +77,29 @@ const handleTestCompleted = () => {
 
 // Функция для запуска следующего теста
 const runNextTest = async () => {
-  // Даем время на обновление DOM
   await nextTick()
 
   const currentTestIndex = tests.findIndex(t => t.id === currentTest.value.id)
   const currentSizeIndex = testSizes.findIndex(s => s === currentTest.value.size)
 
-  // Проверяем, есть ли следующий размер в текущем тесте
   if (currentSizeIndex < testSizes.length - 1) {
     const nextSize = testSizes[currentSizeIndex + 1]
     currentTest.value = { ...tests[currentTestIndex], size: nextSize }
-    currentTestKey.value++ // Увеличиваем ключ для принудительного пересоздания
+    currentTestKey.value++
     testStatus.value.current = `Выполнение: ${tests[currentTestIndex].name} (${nextSize} элементов)`
     window.testStatus.current = testStatus.value.current
     return
   }
 
-  // Проверяем, есть ли следующий тест
   if (currentTestIndex < tests.length - 1) {
     const nextTest = tests[currentTestIndex + 1]
     currentTest.value = { ...nextTest, size: testSizes[0] }
-    currentTestKey.value++ // Увеличиваем ключ для принудительного пересоздания
+    currentTestKey.value++
     testStatus.value.current = `Выполнение: ${nextTest.name} (${testSizes[0]} элементов)`
     window.testStatus.current = testStatus.value.current
     return
   }
 
-  // Если это был последний тест
   currentTest.value = null
   testStatus.value.current = 'Все тесты выполнены'
   console.log('🎉 Все тесты выполнены!')
@@ -106,9 +108,9 @@ const runNextTest = async () => {
 
 // Главная функция запуска тестов
 const runAllTests = () => {
-  // Инициализируем глобальный объект для результатов
   window.performanceResults = {
-    render: []
+    render: [],
+    update: [] // Добавлено хранилище для результатов UpdateTest
   }
   window.allTestsCompleted = false
   window.testStatus = {
@@ -117,14 +119,12 @@ const runAllTests = () => {
     total: testSizes.length * tests.length
   }
 
-  // Запускаем первый тест
   currentTest.value = { ...tests[0], size: testSizes[0] }
   currentTestKey.value = 1
   testStatus.value.current = `Выполнение: ${tests[0].name} (${testSizes[0]} элементов)`
   window.testStatus.current = testStatus.value.current
 }
 
-// Запускаем тесты при монтировании компонента
 onMounted(() => {
   setTimeout(runAllTests, 100)
 })

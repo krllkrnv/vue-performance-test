@@ -3,6 +3,12 @@
     <div class="info">
       Тестирование обновлений: {{ size }} элементов | Обновлений: {{ updateCount }}
     </div>
+    <div class="progress" v-if="testRunning">
+      <div class="progress-bar" :style="{ width: batchProgress + '%' }"></div>
+      <div class="progress-text">
+        Пакет {{ currentBatch }}/{{ totalBatches }} ({{ updatesPerBatch }} элементов)
+      </div>
+    </div>
     <table v-if="data.length">
       <thead>
         <tr>
@@ -25,7 +31,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, defineEmits, defineProps, computed } from 'vue'
 import { generateDataset, waitForRender } from '@/utils/perf'
 
 const props = defineProps({
@@ -35,9 +41,18 @@ const props = defineProps({
   }
 })
 
+const emit = defineEmits(['test-completed'])
+
 const data = ref([])
 const visibleData = ref([])
 const updateCount = ref(0)
+const testRunning = ref(true)
+const currentBatch = ref(0)
+const totalBatches = 20
+const updatesPerBatch = computed(() => Math.max(1, Math.floor(props.size * 0.1)))
+
+// Прогресс выполнения текущего теста
+const batchProgress = computed(() => (currentBatch.value / totalBatches) * 100)
 
 // Функция обновления случайных элементов
 const updateRandomItems = async (count) => {
@@ -47,14 +62,16 @@ const updateRandomItems = async (count) => {
   }
 
   indexes.forEach(index => {
-    data.value[index] = {
-      ...data.value[index],
-      value: Math.random() * 100,
-      updateCount: data.value[index].updateCount + 1
+    if (data.value[index]) {
+      data.value[index] = {
+        ...data.value[index],
+        value: Math.random() * 100,
+        updateCount: data.value[index].updateCount + 1
+      }
     }
   })
 
-  // Для принудительного обновления реактивности
+  // Обновляем видимые данные для реактивности
   visibleData.value = [...data.value.slice(0, 100)]
 }
 
@@ -62,6 +79,8 @@ const updateRandomItems = async (count) => {
 const runTest = async () => {
   try {
     // 1. Инициализация данных
+    testRunning.value = true
+    currentBatch.value = 0
     data.value = generateDataset(props.size).map(item => ({
       ...item,
       updateCount: 0
@@ -75,16 +94,14 @@ const runTest = async () => {
     const testStart = performance.now()
     const updateDurations = []
 
-    // 3. Выполняем серию обновлений (10% от размера набора)
-    const updatesPerBatch = Math.max(1, Math.floor(props.size * 0.1))
-    const batches = 20
-
-    for (let i = 0; i < batches; i++) {
+    // 3. Выполняем серию обновлений
+    for (let i = 0; i < totalBatches; i++) {
+      currentBatch.value = i + 1
       const batchStart = performance.now()
 
       // Обновляем данные
-      await updateRandomItems(updatesPerBatch)
-      updateCount.value += updatesPerBatch
+      await updateRandomItems(updatesPerBatch.value)
+      updateCount.value += updatesPerBatch.value
 
       // Ждем рендеринга
       await waitForRender()
@@ -111,9 +128,9 @@ const runTest = async () => {
 
     window.performanceResults.update.push({
       size: props.size,
-      batches,
-      updatesPerBatch,
-      totalUpdates: batches * updatesPerBatch,
+      batches: totalBatches,
+      updatesPerBatch: updatesPerBatch.value,
+      totalUpdates: totalBatches * updatesPerBatch.value,
       totalDuration,
       avgDuration,
       minDuration,
@@ -122,15 +139,14 @@ const runTest = async () => {
       timestamp: Date.now()
     })
 
-    console.log(`Update test completed: ${props.size} items, ${totalDuration.toFixed(2)}ms total`)
+    console.log(`✅ Update test completed: ${props.size} items, ${totalDuration.toFixed(2)}ms total`)
 
   } catch (error) {
-    console.error('Update test error:', error)
+    console.error('❌ Update test error:', error)
   } finally {
+    testRunning.value = false
     // Сигнализируем о завершении теста
-    if (window.testCompleted) {
-      window.testCompleted()
-    }
+    emit('test-completed')
   }
 }
 
@@ -147,6 +163,7 @@ onMounted(async () => {
   border: 1px solid #eee;
   border-radius: 8px;
   background-color: #f9f9f9;
+  position: relative;
 }
 
 .info {
@@ -156,11 +173,53 @@ onMounted(async () => {
   border-bottom: 1px solid #ddd;
 }
 
+.progress {
+  margin-bottom: 15px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar {
+  height: 20px;
+  background-color: #3498db;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #fff;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
+  margin-top: 15px;
 }
 
-/* Остальные стили аналогичны RenderTest */
+th, td {
+  padding: 8px 12px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+tr:nth-child(even) {
+  background-color: #f8f8f8;
+}
 </style>

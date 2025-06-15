@@ -5,7 +5,12 @@
     <div class="test-container">
       <div v-if="currentTest" class="current-test">
         <h2>{{ currentTest.name }} - {{ currentTest.size }} элементов</h2>
-        <component :is="currentTest.component" :size="currentTest.size" />
+        <component
+          :is="currentTest.component"
+          :size="currentTest.size"
+          @test-completed="handleTestCompleted"
+          :key="currentTestKey"
+        />
       </div>
 
       <div v-else class="completion-message">
@@ -27,7 +32,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, markRaw } from 'vue'
+import { ref, computed, onMounted, markRaw, nextTick } from 'vue'
 import RenderTest from './components/RenderTest.vue'
 
 // Конфигурация тестов с markRaw
@@ -35,25 +40,72 @@ const tests = [
   {
     id: 'render',
     name: 'Тест рендеринга',
-    component: markRaw(RenderTest) // Используем markRaw
+    component: markRaw(RenderTest)
   }
 ]
 
 const testSizes = [100, 1000, 5000, 10000]
 const currentTest = ref(null)
+const currentTestKey = ref(0) // Ключ для принудительного пересоздания компонента
 const completedTests = ref(0)
 const testStatus = ref({
   current: 'Подготовка к запуску',
   progress: 0,
-  total: testSizes.length
+  total: testSizes.length * tests.length
 })
 
 // Вычисляемые свойства
 const totalTests = computed(() => tests.length * testSizes.length)
 const progress = computed(() => (completedTests.value / totalTests.value) * 100)
 
+// Обработчик события завершения теста
+const handleTestCompleted = () => {
+  completedTests.value++
+  testStatus.value.progress = completedTests.value
+  window.testStatus.progress = completedTests.value
+  console.log(`✅ Тест завершен: ${currentTest.value.name} (${currentTest.value.size} элементов)`)
+
+  // Запускаем следующий тест
+  runNextTest()
+}
+
+// Функция для запуска следующего теста
+const runNextTest = async () => {
+  // Даем время на обновление DOM
+  await nextTick()
+
+  const currentTestIndex = tests.findIndex(t => t.id === currentTest.value.id)
+  const currentSizeIndex = testSizes.findIndex(s => s === currentTest.value.size)
+
+  // Проверяем, есть ли следующий размер в текущем тесте
+  if (currentSizeIndex < testSizes.length - 1) {
+    const nextSize = testSizes[currentSizeIndex + 1]
+    currentTest.value = { ...tests[currentTestIndex], size: nextSize }
+    currentTestKey.value++ // Увеличиваем ключ для принудительного пересоздания
+    testStatus.value.current = `Выполнение: ${tests[currentTestIndex].name} (${nextSize} элементов)`
+    window.testStatus.current = testStatus.value.current
+    return
+  }
+
+  // Проверяем, есть ли следующий тест
+  if (currentTestIndex < tests.length - 1) {
+    const nextTest = tests[currentTestIndex + 1]
+    currentTest.value = { ...nextTest, size: testSizes[0] }
+    currentTestKey.value++ // Увеличиваем ключ для принудительного пересоздания
+    testStatus.value.current = `Выполнение: ${nextTest.name} (${testSizes[0]} элементов)`
+    window.testStatus.current = testStatus.value.current
+    return
+  }
+
+  // Если это был последний тест
+  currentTest.value = null
+  testStatus.value.current = 'Все тесты выполнены'
+  console.log('🎉 Все тесты выполнены!')
+  window.allTestsCompleted = true
+}
+
 // Главная функция запуска тестов
-const runAllTests = async () => {
+const runAllTests = () => {
   // Инициализируем глобальный объект для результатов
   window.performanceResults = {
     render: []
@@ -62,61 +114,19 @@ const runAllTests = async () => {
   window.testStatus = {
     current: 'Запуск тестов',
     progress: 0,
-    total: testSizes.length
+    total: testSizes.length * tests.length
   }
 
-  // Последовательно запускаем все тесты
-  for (const test of tests) {
-    for (const size of testSizes) {
-      // Устанавливаем текущий тест
-      currentTest.value = { ...test, size }
-      testStatus.value.current = `Выполнение: ${test.name} (${size} элементов)`
-      window.testStatus.current = testStatus.value.current
-
-      // Ждем монтирования компонента
-      await new Promise(resolve => setTimeout(resolve, 100))
-
-      try {
-        // Ожидаем завершения теста с обработкой таймаута
-        await new Promise((resolve, reject) => {
-          // Устанавливаем обработчик завершения
-          window.testCompleted = () => {
-            clearTimeout(timeoutId)
-            resolve()
-          }
-
-          // Таймаут на случай зависания теста
-          const timeoutId = setTimeout(() => {
-            reject(new Error(`Тест завис: ${test.name} (${size} элементов)`))
-          }, 120000) // 2 минуты на тест
-        })
-
-        // Увеличиваем счетчик завершенных тестов
-        completedTests.value++
-        testStatus.value.progress = completedTests.value
-        window.testStatus.progress = completedTests.value
-        console.log(`✅ Тест завершен: ${test.name} (${size} элементов)`)
-      } catch (error) {
-        console.error(`❌ Ошибка теста: ${test.name} (${size} элементов)`, error)
-        testStatus.value.current = `Ошибка: ${error.message}`
-        window.testStatus.current = testStatus.value.current
-      }
-    }
-  }
-
-  // Все тесты завершены
-  currentTest.value = null
-  testStatus.value.current = 'Все тесты выполнены'
-  console.log('🎉 Все тесты выполнены!')
-
-  // Устанавливаем флаг завершения
-  window.allTestsCompleted = true
+  // Запускаем первый тест
+  currentTest.value = { ...tests[0], size: testSizes[0] }
+  currentTestKey.value = 1
+  testStatus.value.current = `Выполнение: ${tests[0].name} (${testSizes[0]} элементов)`
+  window.testStatus.current = testStatus.value.current
 }
 
 // Запускаем тесты при монтировании компонента
 onMounted(() => {
-  // Небольшая задержка для инициализации
-  setTimeout(runAllTests, 1000)
+  setTimeout(runAllTests, 100)
 })
 </script>
 

@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, watch, onMounted, defineEmits } from 'vue'
 import { generateDataset, waitForRender } from '@/utils/perf'
 
 const props = defineProps({
@@ -35,6 +35,7 @@ const props = defineProps({
   }
 })
 
+const emit = defineEmits(['test-completed'])
 const data = ref([])
 
 // Основная функция тестирования
@@ -58,10 +59,6 @@ const runTest = async () => {
     const memoryUsed = performance.memory?.usedJSHeapSize || 0
 
     // 6. Сохранение результатов
-    if (!window.performanceResults.render) {
-      window.performanceResults.render = []
-    }
-
     window.performanceResults.render.push({
       size: props.size,
       duration,
@@ -74,17 +71,12 @@ const runTest = async () => {
   } catch (error) {
     console.error('Render test error:', error)
   } finally {
-    // Сигнализируем о завершении теста
-    if (window.testCompleted) {
-      window.testCompleted()
-    }
+    emit('test-completed')
   }
 }
 
-onMounted(async () => {
-  // Запускаем тест при монтировании
-  await runTest()
-})
+onMounted(runTest)
+watch(() => props.size, runTest)
 </script>
 
 <style scoped>

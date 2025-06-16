@@ -7,11 +7,12 @@
     "preview": "vite preview --host --port 4173",
     "test:e2e": "node tests/e2e/runner.js",
     "lhci:collect": "lhci collect --config=lighthouserc.json",
-"lhci:assert":  "lhci assert --config=lighthouserc.json",
-"lhci":         "npm run lhci:collect && npm run lhci:assert"
+    "lhci:assert": "lhci assert --config=lighthouserc.json",
+    "lhci": "npm run lhci:collect && npm run lhci:assert"
   },
   "dependencies": {
-    "vue": "^3.4.1"
+    "vue": "^3.4.1",
+    "vue-router": "^4.5.1"
   },
   "devDependencies": {
     "@lhci/cli": "^0.10.0",

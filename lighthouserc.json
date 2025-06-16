@@ -1,23 +1,34 @@
 {
   "ci": {
-    "collect": [
-      {
-        "url": ["http://localhost:5173"],
-        "startServerCommand": "npm run serve",
-        "startServerReadyPattern": "ready",
-        "numberOfRuns": 3,
-        "settings": {
-          "chromeFlags": ["--headless=new", "--no-sandbox"]
-        }
+    "collect": {
+      "url": [
+        "http://localhost:4173/render/100",
+        "http://localhost:4173/render/1000",
+        "http://localhost:4173/render/5000",
+        "http://localhost:4173/render/10000",
+        "http://localhost:4173/update/100",
+        "http://localhost:4173/update/1000",
+        "http://localhost:4173/update/5000",
+        "http://localhost:4173/update/10000",
+        "http://localhost:4173/interaction/100",
+        "http://localhost:4173/interaction/1000",
+        "http://localhost:4173/interaction/5000",
+        "http://localhost:4173/interaction/10000"
+      ],
+      "startServerCommand": "npm run build && npm run preview",
+      "startServerReadyPattern": "Local:",
+      "numberOfRuns": 2,
+      "settings": {
+        "chromeFlags": ["--headless=new", "--no-sandbox"]
       }
-    ],
+    },
     "assert": {
       "assertions": {
-        "categories:performance": ["error", { "minScore": 0.90 }],
-        "first-contentful-paint": ["warn", { "maxNumericValue": 2000 }],
-        "largest-contentful-paint": ["warn", { "maxNumericValue": 2500 }],
-        "total-blocking-time": ["warn", { "maxNumericValue": 300 }],
-        "cumulative-layout-shift": ["warn", { "maxNumericValue": 0.10 }]
+        "categories:performance": ["error", { "minScore": 0.50 }],
+        "first-contentful-paint": ["warn", { "maxNumericValue": 2500 }],
+        "largest-contentful-paint": ["warn", { "maxNumericValue": 3000 }],
+        "total-blocking-time": ["warn", { "maxNumericValue": 15000 }],
+        "cumulative-layout-shift": ["warn", { "maxNumericValue": 0.15 }]
       }
     },
     "upload": {

@@ -2,139 +2,57 @@
   <div id="app">
     <h1>Vue.js Performance Research</h1>
 
-    <div class="test-container">
-      <div v-if="currentTest" class="current-test">
-        <h2>{{ currentTest.name }} - {{ currentTest.size }} элементов</h2>
-        <component
-          :is="currentTest.component"
-          :size="currentTest.size"
-          @test-completed="handleTestCompleted"
-          :key="currentTestKey"
-        />
-      </div>
-
-      <div v-else class="completion-message">
-        <div class="progress-bar" :style="{ width: progress + '%' }"></div>
-        <p>Все тесты завершены!</p>
-        <p>Результаты сохранены в папке /results</p>
-      </div>
+    <div class="info-panel" v-if="route.query.auto !== 'true'">
+      <p>Автоматический режим отключен. Для последовательного запуска тестов добавьте <code>?auto=true</code> в URL</p>
     </div>
 
-    <div class="status-bar">
-      <div class="progress-text">
-        Прогресс: {{ completedTests }}/{{ totalTests }} тестов
-      </div>
-      <div class="current-status" v-if="testStatus.current">
-        Текущий статус: {{ testStatus.current }}
-      </div>
+    <div class="test-container">
+      <router-view @test-completed="onTestCompleted" />
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, markRaw, nextTick } from 'vue'
-import RenderTest from './components/RenderTest.vue'
-import UpdateTest from './components/UpdateTest.vue'
-import InteractionTest
- from './components/InteractionTest.vue'
-// Конфигурация тестов с markRaw
-const tests = [
-  {
-    id: 'render',
-    name: 'Тест рендеринга',
-    component: markRaw(RenderTest)
-  },
-  {
-    id: 'update',
-    name: 'Тест обновлений',
-    component: markRaw(UpdateTest)
-  },
-    {
-    id: 'interaction',
-    name: 'Тест взаимодействий',
-    component: markRaw(InteractionTest)
-  }
-]
+import { useRouter, useRoute } from 'vue-router'
+import { ref, watch } from 'vue'
+
+const router = useRouter()
+const route = useRoute()
 
 const testSizes = [100, 1000, 5000, 10000]
-const currentTest = ref(null)
-const currentTestKey = ref(0)
-const completedTests = ref(0)
-const testStatus = ref({
-  current: 'Подготовка к запуску',
-  progress: 0,
-  total: testSizes.length * tests.length
-})
+const scenarios = ['render', 'update', 'interaction']
 
-// Вычисляемые свойства
-const totalTests = computed(() => tests.length * testSizes.length)
-const progress = computed(() => (completedTests.value / totalTests.value) * 100)
-
-// Обработчик события завершения теста
-const handleTestCompleted = () => {
-  completedTests.value++
-  testStatus.value.progress = completedTests.value
-  window.testStatus.progress = completedTests.value
-  console.log(`✅ Тест завершен: ${currentTest.value.name} (${currentTest.value.size} элементов)`)
-
-  // Запускаем следующий тест
-  runNextTest()
-}
-
-// Функция для запуска следующего теста
-const runNextTest = async () => {
-  await nextTick()
-
-  const currentTestIndex = tests.findIndex(t => t.id === currentTest.value.id)
-  const currentSizeIndex = testSizes.findIndex(s => s === currentTest.value.size)
-
-  if (currentSizeIndex < testSizes.length - 1) {
-    const nextSize = testSizes[currentSizeIndex + 1]
-    currentTest.value = { ...tests[currentTestIndex], size: nextSize }
-    currentTestKey.value++
-    testStatus.value.current = `Выполнение: ${tests[currentTestIndex].name} (${nextSize} элементов)`
-    window.testStatus.current = testStatus.value.current
+function onTestCompleted() {
+  if (route.query.auto !== 'true') {
+    console.log('Тест завершен. Автоматический переход отключен')
     return
   }
 
-  if (currentTestIndex < tests.length - 1) {
-    const nextTest = tests[currentTestIndex + 1]
-    currentTest.value = { ...nextTest, size: testSizes[0] }
-    currentTestKey.value++
-    testStatus.value.current = `Выполнение: ${nextTest.name} (${testSizes[0]} элементов)`
-    window.testStatus.current = testStatus.value.current
+  const [scenario, sizeStr] = route.name.split('-')
+  const currentSize = Number(sizeStr)
+  const sizeIndex = testSizes.indexOf(currentSize)
+  const scenarioIndex = scenarios.indexOf(scenario)
+
+  let nextScenario = scenario
+  let nextSize = currentSize
+
+  if (sizeIndex < testSizes.length - 1) {
+    nextSize = testSizes[sizeIndex + 1]
+  }
+  else if (scenarioIndex < scenarios.length - 1) {
+    nextScenario = scenarios[scenarioIndex + 1]
+    nextSize = testSizes[0]
+  }
+  else {
+    alert('Все тесты выполнены! Результаты сохранены в папке /results')
     return
   }
 
-  currentTest.value = null
-  testStatus.value.current = 'Все тесты выполнены'
-  console.log('🎉 Все тесты выполнены!')
-  window.allTestsCompleted = true
+  router.push({
+    name: `${nextScenario}-${nextSize}`,
+    query: { ...route.query }
+  })
 }
-
-// Главная функция запуска тестов
-const runAllTests = () => {
-  window.performanceResults = {
-    render: [],
-    update: [],
-    interaction: []
-  }
-  window.allTestsCompleted = false
-  window.testStatus = {
-    current: 'Запуск тестов',
-    progress: 0,
-    total: testSizes.length * tests.length
-  }
-
-  currentTest.value = { ...tests[0], size: testSizes[0] }
-  currentTestKey.value = 1
-  testStatus.value.current = `Выполнение: ${tests[0].name} (${testSizes[0]} элементов)`
-  window.testStatus.current = testStatus.value.current
-}
-
-onMounted(() => {
-  setTimeout(runAllTests, 100)
-})
 </script>
 
 <style>
@@ -152,6 +70,26 @@ h1 {
   color: #2c3e50;
 }
 
+.info-panel {
+  background-color: #e3f2fd;
+  border-left: 4px solid #2196f3;
+  padding: 12px 20px;
+  margin-bottom: 20px;
+  border-radius: 0 4px 4px 0;
+}
+
+.info-panel p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.info-panel code {
+  background-color: #e8f4ff;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
 .test-container {
   min-height: 500px;
   border: 1px solid #e0e0e0;
@@ -159,56 +97,5 @@ h1 {
   padding: 20px;
   background-color: #fafafa;
   margin-bottom: 20px;
-}
-
-.current-test h2 {
-  color: #3498db;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.completion-message {
-  text-align: center;
-  padding: 40px 20px;
-}
-
-.completion-message p {
-  font-size: 1.2rem;
-  margin: 10px 0;
-}
-
-.completion-message p:first-of-type {
-  font-weight: bold;
-  font-size: 1.5rem;
-  color: #27ae60;
-  margin-top: 30px;
-}
-
-.progress-bar {
-  height: 10px;
-  background-color: #2ecc71;
-  border-radius: 5px;
-  margin: 0 auto 30px;
-  max-width: 600px;
-  transition: width 0.5s ease;
-}
-
-.status-bar {
-  background-color: #f5f5f5;
-  padding: 10px 15px;
-  border-radius: 5px;
-  font-size: 0.9rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.progress-text {
-  font-weight: bold;
-}
-
-.current-status {
-  font-style: italic;
-  color: #666;
 }
 </style>

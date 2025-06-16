@@ -1,15 +1,20 @@
 {
   "name": "vue-perf-research",
   "type": "module",
-"scripts": {
-  "serve": "vite --host",
-  "test:e2e": "node tests/e2e/runner.js"
-}
-,
+  "scripts": {
+    "serve": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview --host --port 4173",
+    "test:e2e": "node tests/e2e/runner.js",
+    "lhci:collect": "lhci collect --config=lighthouserc.json",
+"lhci:assert":  "lhci assert --config=lighthouserc.json",
+"lhci":         "npm run lhci:collect && npm run lhci:assert"
+  },
   "dependencies": {
     "vue": "^3.4.1"
   },
   "devDependencies": {
+    "@lhci/cli": "^0.10.0",
     "@vitejs/plugin-vue": "^5.0.4",
     "chart.js": "^4.0.0",
     "chartjs-node-canvas": "^5.0.0",

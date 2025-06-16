@@ -2,6 +2,7 @@
   <div class="interaction-test">
     <div class="info">
       Пакет пользовательских действий: {{ cycles }} повторений | Первичный размер: {{ size }}
+      <div v-if="status" class="status">{{ status }}</div>
     </div>
 
     <div class="controls">
@@ -9,12 +10,21 @@
       <button @click="applyFilter">Применить</button>
     </div>
 
+    <div class="stats" v-if="resultsReady">
+      <div class="action-stats" v-for="(action, name) in stats" :key="name">
+        <h3>{{ getActionName(name) }}</h3>
+        <p>Среднее время: {{ action.avgDuration.toFixed(2) }} мс</p>
+        <p>Средний TBT: {{ action.avgTBT.toFixed(2) }} мс</p>
+        <p>Средний CLS: {{ action.avgCLS.toFixed(4) }}</p>
+      </div>
+    </div>
+
     <table v-if="displayData.length">
       <thead>
         <tr>
-          <th @click="sortBy('id')">ID</th>
-          <th @click="sortBy('name')">Name</th>
-          <th @click="sortBy('value')">Value</th>
+          <th @click="sortBy('id')">ID {{ sortIndicator('id') }}</th>
+          <th @click="sortBy('name')">Name {{ sortIndicator('name') }}</th>
+          <th @click="sortBy('value')">Value {{ sortIndicator('value') }}</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -25,29 +35,23 @@
           <td>{{ item.value.toFixed(2) }}</td>
           <td><button @click="toggleDetails(item.id)">Details</button></td>
         </tr>
-        <tr v-for="item in displayData" :key="`details-${item.id}`">
+        <tr v-if="expandedRow !== null">
           <td colspan="4">
             <transition name="fade">
-              <div v-if="expandedRow === item.id" class="details">
-                Подробности для {{ item.name }}: значение {{ item.value.toFixed(2) }}
+              <div v-if="expandedRow !== null" class="details">
+                Подробности для {{ getItemName(expandedRow) }}: значение {{ getItemValue(expandedRow).toFixed(2) }}
               </div>
             </transition>
           </td>
         </tr>
       </tbody>
     </table>
-
-    <div class="stats" v-if="durations.length">
-      <p>Средняя длительность операции: {{ avgDuration.toFixed(2) }} мс</p>
-      <p>Средний TBT: {{ avgTBT.toFixed(2) }} мс</p>
-      <p>Средний CLS: {{ avgCLS.toFixed(4) }}</p>
-    </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch, nextTick, defineEmits } from 'vue'
-import { generateDataset, waitForRender } from '@/utils/perf'
+import { ref, computed, onMounted, defineEmits, defineProps } from 'vue'
+import { generateDataset } from '@/utils/perf'
 
 const props = defineProps({
   size: { type: Number, required: true },
@@ -55,16 +59,50 @@ const props = defineProps({
 })
 const emit = defineEmits(['test-completed'])
 
+// Состояние компонента
 const data = ref([])
 const filterText = ref('')
 const appliedFilter = ref('')
 const sortKey = ref('')
 const sortAsc = ref(true)
 const expandedRow = ref(null)
+const status = ref('')
 
-const durations = ref([])
-const tbtValues = ref([])
-const clsValues = ref([])
+// Результаты тестов
+const filterResults = ref({ durations: [], tbt: [], cls: [] })
+const sortResults = ref({ durations: [], tbt: [], cls: [] })
+const expandResults = ref({ durations: [], tbt: [], cls: [] })
+const resultsReady = ref(false)
+
+// Статистика
+const stats = computed(() => ({
+  filter: {
+    avgDuration: avg(filterResults.value.durations),
+    avgTBT: avg(filterResults.value.tbt),
+    avgCLS: avg(filterResults.value.cls)
+  },
+  sort: {
+    avgDuration: avg(sortResults.value.durations),
+    avgTBT: avg(sortResults.value.tbt),
+    avgCLS: avg(sortResults.value.cls)
+  },
+  expand: {
+    avgDuration: avg(expandResults.value.durations),
+    avgTBT: avg(expandResults.value.tbt),
+    avgCLS: avg(expandResults.value.cls)
+  }
+}))
+
+// Вспомогательные функции
+const avg = arr => arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length : 0
+const getActionName = name => ({
+  filter: 'Фильтрация',
+  sort: 'Сортировка',
+  expand: 'Раскрытие деталей'
+}[name])
+
+const getItemName = id => data.value.find(item => item.id === id)?.name || ''
+const getItemValue = id => data.value.find(item => item.id === id)?.value || 0
 
 const displayData = computed(() => {
   let arr = data.value
@@ -80,110 +118,191 @@ const displayData = computed(() => {
   return arr
 })
 
-const avg = arr => arr.reduce((a, b) => a + b, 0) / arr.length
-const avgDuration = computed(() => durations.value.length ? avg(durations.value) : 0)
-const avgTBT = computed(() => tbtValues.value.length ? avg(tbtValues.value) : 0)
-const avgCLS = computed(() => clsValues.value.length ? avg(clsValues.value) : 0)
+const sortIndicator = key => {
+  if (sortKey.value !== key) return ''
+  return sortAsc.value ? '↑' : '↓'
+}
 
+// Основные функции
 function applyFilter() {
   appliedFilter.value = filterText.value
 }
+
 function sortBy(key) {
-  if (sortKey.value === key) sortAsc.value = !sortAsc.value
-  else { sortKey.value = key; sortAsc.value = true }
+  if (sortKey.value === key) {
+    sortAsc.value = !sortAsc.value
+  } else {
+    sortKey.value = key
+    sortAsc.value = true
+  }
 }
+
 function toggleDetails(id) {
   expandedRow.value = expandedRow.value === id ? null : id
 }
 
-async function runTest() {
-  console.log(`🚀 Starting interaction test: size=${props.size}, cycles=${props.cycles}`)
-  // Сброс предыдущих данных и метрик
-  data.value = []
-  durations.value = []
-  tbtValues.value = []
-  clsValues.value = []
-  filterText.value = ''
-  appliedFilter.value = ''
-  sortKey.value = ''
-  expandedRow.value = null
-
-  // Первичный рендер
-  data.value = generateDataset(props.size)
-  await waitForRender()
-
-  // Настройка наблюдателей
-  let clsCumulative = 0
-  const clsObserver = new PerformanceObserver(list => {
-    for (const entry of list.getEntries()) if (!entry.hadRecentInput) clsCumulative += entry.value
+// Ожидание полного цикла рендеринга
+const waitForAnimationFrame = () => {
+  return new Promise(resolve => {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        resolve()
+      })
+    })
   })
-  clsObserver.observe({ type: 'layout-shift', buffered: true })
+}
 
-  let tbtCumulative = 0
+// Настройка наблюдателей производительности
+const setupObservers = () => {
+  let tbt = 0
+  let cls = 0
+
   const longTaskObserver = new PerformanceObserver(list => {
-    for (const entry of list.getEntries()) if (entry.duration > 50) tbtCumulative += entry.duration - 50
+    list.getEntries().forEach(entry => {
+      if (entry.duration > 50) tbt += entry.duration - 50
+    })
   })
-  longTaskObserver.observe({ type: 'longtask', buffered: true })
+  longTaskObserver.observe({ type: "longtask", buffered: true })
+
+  const clsObserver = new PerformanceObserver(list => {
+    list.getEntries().forEach(entry => {
+      if (!entry.hadRecentInput) cls += entry.value
+    })
+  })
+  clsObserver.observe({ type: "layout-shift", buffered: true })
+
+  return {
+    getMetrics: () => ({ tbt, cls }),
+    disconnect: () => {
+      longTaskObserver.disconnect()
+      clsObserver.disconnect()
+    }
+  }
+}
+
+// Измерение производительности одного действия
+const measureAction = async (action) => {
+  const observers = setupObservers()
+  const beforeMetrics = observers.getMetrics()
+  const start = performance.now()
+
+  // Выполняем действие
+  action.execute()
+
+  // Ожидаем завершения рендеринга
+  await waitForAnimationFrame()
+
+  const duration = performance.now() - start
+  const afterMetrics = observers.getMetrics()
+  observers.disconnect()
+
+  // Сбрасываем состояние
+  if (action.reset) action.reset()
+  await waitForAnimationFrame()
+
+  return {
+    duration,
+    tbt: afterMetrics.tbt - beforeMetrics.tbt,
+    cls: afterMetrics.cls - beforeMetrics.cls
+  }
+}
+
+// Основная функция тестирования
+async function runTest() {
+  status.value = 'Подготовка...'
+  resultsReady.value = false
+  filterResults.value = { durations: [], tbt: [], cls: [] }
+  sortResults.value = { durations: [], tbt: [], cls: [] }
+  expandResults.value = { durations: [], tbt: [], cls: [] }
 
   try {
+    // Инициализация данных
+    data.value = generateDataset(props.size)
+    await waitForAnimationFrame()
+
+    // Прогревочные операции
+    status.value = 'Прогрев...'
+    await Promise.all([
+      measureAction({
+        execute: () => {
+          filterText.value = data.value[0].name
+          applyFilter()
+        },
+        reset: () => { appliedFilter.value = '' }
+      }),
+      measureAction({
+        execute: () => sortBy('value'),
+        reset: () => { sortKey.value = '' }
+      }),
+      measureAction({
+        execute: () => toggleDetails(data.value[0].id),
+        reset: () => { expandedRow.value = null }
+      })
+    ])
+
+    // Основные измерения
+    status.value = `Выполнение тестов (0/${props.cycles})...`
+
     for (let i = 0; i < props.cycles; i++) {
-      const clsBefore = clsCumulative
-      const tbtBefore = tbtCumulative
+      status.value = `Цикл ${i + 1}/${props.cycles}...`
 
-      performance.mark(`start-${i}`)
-      // 1. Фильтрация
-      filterText.value = data.value.length ? data.value[0].name : ''
-      applyFilter()
-      await nextTick()
-      await waitForRender()
+      // Фильтрация
+      const filterResult = await measureAction({
+        execute: () => {
+          filterText.value = data.value[Math.floor(Math.random() * data.value.length)].name
+          applyFilter()
+        },
+        reset: () => { appliedFilter.value = '' }
+      })
+      filterResults.value.durations.push(filterResult.duration)
+      filterResults.value.tbt.push(filterResult.tbt)
+      filterResults.value.cls.push(filterResult.cls)
 
-      // 2. Сортировка
-      sortBy('value')
-      await nextTick()
-      await waitForRender()
+      // Сортировка
+      const sortResult = await measureAction({
+        execute: () => sortBy(['id', 'name', 'value'][i % 3]),
+        reset: () => { sortKey.value = '' }
+      })
+      sortResults.value.durations.push(sortResult.duration)
+      sortResults.value.tbt.push(sortResult.tbt)
+      sortResults.value.cls.push(sortResult.cls)
 
-      // 3. Разворачивание детали
-      if (displayData.value.length) toggleDetails(displayData.value[0].id)
-      await nextTick()
-      await waitForRender()
-
-      performance.mark(`end-${i}`)
-      performance.measure(`dur-${i}`, `start-${i}`, `end-${i}`)
-      const duration = performance.getEntriesByName(`dur-${i}`)[0].duration
-
-      durations.value.push(duration)
-      const tbtDelta = tbtCumulative - tbtBefore
-      const clsDelta = clsCumulative - clsBefore
-      tbtValues.value.push(tbtDelta)
-      clsValues.value.push(clsDelta)
-
-      console.log(
-        `Interaction cycle ${i + 1}/${props.cycles} for size ${props.size}: ` +
-        `${duration.toFixed(2)}ms, TBT ${tbtDelta.toFixed(2)}ms, ` +
-        `CLS ${clsDelta.toFixed(4)}`
-      )
+      // Раскрытие деталей
+      const expandResult = await measureAction({
+        execute: () => toggleDetails(data.value[Math.floor(Math.random() * data.value.length)].id),
+        reset: () => { expandedRow.value = null }
+      })
+      expandResults.value.durations.push(expandResult.duration)
+      expandResults.value.tbt.push(expandResult.tbt)
+      expandResults.value.cls.push(expandResult.cls)
     }
 
     // Сохранение результатов
+    if (!window.performanceResults) window.performanceResults = {}
+    if (!window.performanceResults.interaction) window.performanceResults.interaction = []
+
     window.performanceResults.interaction.push({
       size: props.size,
-      durations: [...durations.value],
-      tbt: [...tbtValues.value],
-      cls: [...clsValues.value]
+      cycles: props.cycles,
+      filter: { ...filterResults.value },
+      sort: { ...sortResults.value },
+      expand: { ...expandResults.value },
+      timestamp: Date.now()
     })
-    console.log(`✅ Interaction test completed: size=${props.size}, avgDuration=${avgDuration.value.toFixed(2)}ms, avgTBT=${avgTBT.value.toFixed(2)}ms, avgCLS=${avgCLS.value.toFixed(4)}`)
+
+    status.value = 'Тестирование завершено!'
+    resultsReady.value = true
+    console.log('✅ Interaction test completed')
 
   } catch (error) {
     console.error('Interaction test error:', error)
+    status.value = 'Ошибка: ' + error.message
   } finally {
-    clsObserver.disconnect()
-    longTaskObserver.disconnect()
     emit('test-completed')
   }
 }
 
 onMounted(runTest)
-watch(() => props.size, runTest)
 </script>
 
 <style scoped>
@@ -194,50 +313,119 @@ watch(() => props.size, runTest)
   border-radius: 8px;
   background-color: #f9f9f9;
 }
+
 .info {
   font-weight: bold;
   margin-bottom: 15px;
   padding-bottom: 10px;
   border-bottom: 1px solid #ddd;
+  position: relative;
 }
+
+.status {
+  font-weight: normal;
+  font-size: 0.9em;
+  color: #666;
+  margin-top: 5px;
+}
+
 .controls {
   margin-bottom: 15px;
+  display: flex;
+  gap: 10px;
 }
+
 .controls input {
-  padding: 6px 10px;
-  margin-right: 10px;
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 }
+
 .controls button {
-  padding: 6px 12px;
+  padding: 8px 16px;
+  background-color: #4a7cff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
+
+.controls button:hover {
+  background-color: #3a6ae8;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.action-stats {
+  padding: 15px;
+  background-color: #f0f8ff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.action-stats h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #2c3e50;
+  border-bottom: 1px solid #d0e0ff;
+  padding-bottom: 5px;
+}
+
+.action-stats p {
+  margin: 8px 0;
+  font-size: 0.9em;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
+  margin-top: 15px;
 }
+
 th, td {
   border: 1px solid #ddd;
-  padding: 8px 12px;
+  padding: 10px 15px;
   text-align: left;
 }
+
 th {
   background-color: #f2f2f2;
   cursor: pointer;
+  position: relative;
+  user-select: none;
 }
+
+th:hover {
+  background-color: #e6e6e6;
+}
+
 tr:nth-child(even) {
   background-color: #f8f8f8;
 }
+
 tr:hover {
   background-color: #f0f7ff;
 }
+
 .details {
-  padding: 10px;
+  padding: 12px;
   background-color: #eef;
   border-radius: 4px;
+  margin: 5px 0;
 }
+
 .fade-enter-active, .fade-leave-active {
   transition: opacity 0.3s;
 }
+
 .fade-enter-from, .fade-leave-to {
   opacity: 0;
 }

@@ -7,7 +7,7 @@
     </div>
 
     <div class="test-container">
-      <router-view @test-completed="onTestCompleted" />
+      <router-view :key="route.fullPath" @test-completed="onTestCompleted" />
     </div>
   </div>
 </template>

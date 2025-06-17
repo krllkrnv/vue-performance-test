@@ -35,12 +35,68 @@ const props = defineProps({
     required: true
   }
 })
-
 const emit = defineEmits(['test-completed'])
+
 const data = ref([])
 const status = ref('')
 
-// Ожидание полного цикла рендеринга
+// Core Web Vitals и другие метрики
+let tbt = 0
+let cls = 0
+let lcpEntry = null
+let fcpEntry = null
+let memoryBefore = 0
+let memoryAfter = 0
+let memoryPeak = 0
+
+// Настройка PerformanceObserver для TBT, CLS, FCP, LCP
+function setupPerformanceObservers() {
+  const longTaskObserver = new PerformanceObserver(list => {
+    list.getEntries().forEach(entry => {
+      if (entry.duration > 50) {
+        tbt += entry.duration - 50
+      }
+    })
+  })
+  longTaskObserver.observe({ type: 'longtask', buffered: true })
+
+  const clsObserver = new PerformanceObserver(list => {
+    list.getEntries().forEach(entry => {
+      if (!entry.hadRecentInput) {
+        cls += entry.value
+      }
+    })
+  })
+  clsObserver.observe({ type: 'layout-shift', buffered: true })
+
+  const lcpObserver = new PerformanceObserver(list => {
+    const entries = list.getEntries()
+    if (entries.length) {
+      lcpEntry = entries[entries.length - 1]
+    }
+  })
+  lcpObserver.observe({ type: 'largest-contentful-paint', buffered: true })
+
+  const paintObserver = new PerformanceObserver(list => {
+    list.getEntries().forEach(entry => {
+      if (entry.name === 'first-contentful-paint') {
+        fcpEntry = entry
+      }
+    })
+  })
+  paintObserver.observe({ type: 'paint', buffered: true })
+
+  return {
+    disconnect: () => {
+      longTaskObserver.disconnect()
+      clsObserver.disconnect()
+      lcpObserver.disconnect()
+      paintObserver.disconnect()
+    }
+  }
+}
+
+// Дожидаемся полного цикла рендеринга
 const waitForAnimationFrame = () => {
   return new Promise(resolve => {
     requestAnimationFrame(() => {
@@ -51,68 +107,87 @@ const waitForAnimationFrame = () => {
   })
 }
 
-// Точный замер рендеринга
-const measureRender = async () => {
-  // 1. Прогревочный рендер
+async function measureRender() {
+  // 1) Прогрев
   status.value = 'Прогрев...'
   data.value = generateDataset(props.size)
   await waitForAnimationFrame()
 
-  // 2. Очистка для теста
+  // 2) Очистка
   status.value = 'Очистка...'
   data.value = []
   await waitForAnimationFrame()
 
-  // 3. Генерация данных (вне замера времени)
-  const dataset = generateDataset(props.size)
+  // 3) Сброс предыдущих замеров
+  performance.clearResourceTimings()
+  performance.clearMeasures()
+  performance.clearMarks()
 
-  // 4. Замер основного рендеринга
+  // 4) Сброс внутренних метрик
+  tbt = 0
+  cls = 0
+  lcpEntry = null
+  fcpEntry = null
+  memoryBefore = performance.memory?.usedJSHeapSize || 0
+  memoryPeak = memoryBefore
+
+  // 5) Включаем наблюдателей
+  const perfObservers = setupPerformanceObservers()
+
+  // 6) Основной замер
   status.value = 'Измерение...'
-  const renderStart = performance.now()
+  const startTime = performance.now()
+  data.value = generateDataset(props.size)
 
-  // Инициируем рендеринг
-  data.value = dataset
+  // Мониторинг пиков памяти
+  const memInterval = setInterval(() => {
+    const used = performance.memory?.usedJSHeapSize || 0
+    if (used > memoryPeak) memoryPeak = used
+  }, 50)
 
-  // Ожидаем завершения рендеринга
   const renderEnd = await waitForAnimationFrame()
+  clearInterval(memInterval)
+  memoryAfter = performance.memory?.usedJSHeapSize || memoryAfter
 
-  // 5. Расчет метрик
-  const duration = renderEnd - renderStart
-  const memoryUsed = performance.memory?.usedJSHeapSize || 0
+  // 7) Отключаем наблюдателей
+  perfObservers.disconnect()
 
+  const duration = renderEnd - startTime
   return {
     duration,
-    memory: memoryUsed
+    tbt,
+    cls,
+    fcp: fcpEntry ? fcpEntry.startTime : 0,
+    lcp: lcpEntry ? lcpEntry.startTime : 0,
+    memoryBefore,
+    memoryAfter,
+    memoryPeak
   }
 }
 
-// Основная функция тестирования
-const runTest = async () => {
+async function runTest() {
   status.value = 'Подготовка...'
-
   try {
-    // Запускаем замер
     const metrics = await measureRender()
 
-    // Сохранение результатов
     if (!window.performanceResults) window.performanceResults = {}
     if (!window.performanceResults.render) window.performanceResults.render = []
 
     window.performanceResults.render.push({
       size: props.size,
-      duration: metrics.duration,
-      memory: metrics.memory,
+      ...metrics,
       timestamp: Date.now()
     })
 
-    console.log(`Render test completed: ${props.size} items, ${metrics.duration.toFixed(2)}ms`)
+    console.log(
+      `Render test completed: ${props.size} items, duration ${metrics.duration.toFixed(2)}ms`,
+      metrics
+    )
     status.value = `Готово: ${metrics.duration.toFixed(2)}ms`
-
   } catch (error) {
     console.error('Render test error:', error)
     status.value = 'Ошибка: ' + error.message
   } finally {
-    // Важное исправление: эмит события без задержки
     emit('test-completed')
   }
 }
@@ -150,7 +225,8 @@ table {
   font-size: 14px;
 }
 
-th, td {
+th,
+td {
   border: 1px solid #ddd;
   padding: 8px 12px;
   text-align: left;

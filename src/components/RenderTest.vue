@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, defineEmits, defineProps } from 'vue'
+import { ref, onMounted, defineEmits, defineProps, nextTick } from 'vue'
 import { generateDataset } from '@/utils/perf'
 
 const props = defineProps({
@@ -40,70 +40,35 @@ const emit = defineEmits(['test-completed'])
 const data = ref([])
 const status = ref('')
 
-// Core Web Vitals и другие метрики
+// Core Web Vitals: TBT и CLS
 let tbt = 0
 let cls = 0
-let lcpEntry = null
-let fcpEntry = null
-let memoryBefore = 0
-let memoryAfter = 0
-let memoryPeak = 0
 
-// Настройка PerformanceObserver для TBT, CLS, FCP, LCP
-function setupPerformanceObservers() {
-  const longTaskObserver = new PerformanceObserver(list => {
-    list.getEntries().forEach(entry => {
-      if (entry.duration > 50) {
-        tbt += entry.duration - 50
-      }
-    })
-  })
-  longTaskObserver.observe({ type: 'longtask', buffered: true })
-
-  const clsObserver = new PerformanceObserver(list => {
-    list.getEntries().forEach(entry => {
-      if (!entry.hadRecentInput) {
-        cls += entry.value
-      }
-    })
-  })
-  clsObserver.observe({ type: 'layout-shift', buffered: true })
-
-  const lcpObserver = new PerformanceObserver(list => {
-    const entries = list.getEntries()
-    if (entries.length) {
-      lcpEntry = entries[entries.length - 1]
+function setupVitalsObservers() {
+  const longTaskObs = new PerformanceObserver(list => {
+    for (const e of list.getEntries()) {
+      if (e.duration > 50) tbt += e.duration - 50
     }
   })
-  lcpObserver.observe({ type: 'largest-contentful-paint', buffered: true })
+  longTaskObs.observe({ type: 'longtask', buffered: true })
 
-  const paintObserver = new PerformanceObserver(list => {
-    list.getEntries().forEach(entry => {
-      if (entry.name === 'first-contentful-paint') {
-        fcpEntry = entry
-      }
-    })
-  })
-  paintObserver.observe({ type: 'paint', buffered: true })
-
-  return {
-    disconnect: () => {
-      longTaskObserver.disconnect()
-      clsObserver.disconnect()
-      lcpObserver.disconnect()
-      paintObserver.disconnect()
+  const clsObs = new PerformanceObserver(list => {
+    for (const e of list.getEntries()) {
+      if (!e.hadRecentInput) cls += e.value
     }
+  })
+  clsObs.observe({ type: 'layout-shift', buffered: true })
+
+  return () => {
+    longTaskObs.disconnect()
+    clsObs.disconnect()
   }
 }
 
-// Дожидаемся полного цикла рендеринга
-const waitForAnimationFrame = () => {
-  return new Promise(resolve => {
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        resolve(performance.now())
-      })
-    })
+// Ждём два RAF, чтобы гарантировать конец отрисовки
+function raf2() {
+  return new Promise(r => {
+    requestAnimationFrame(() => requestAnimationFrame(r))
   })
 }
 
@@ -111,57 +76,50 @@ async function measureRender() {
   // 1) Прогрев
   status.value = 'Прогрев...'
   data.value = generateDataset(props.size)
-  await waitForAnimationFrame()
+  await raf2()
 
   // 2) Очистка
   status.value = 'Очистка...'
   data.value = []
-  await waitForAnimationFrame()
+  await raf2()
 
-  // 3) Сброс предыдущих замеров
-  performance.clearResourceTimings()
-  performance.clearMeasures()
+  // 3) Сброс пользовательских меток
   performance.clearMarks()
+  performance.clearMeasures()
 
-  // 4) Сброс внутренних метрик
+  // 4) Сброс Vitals
   tbt = 0
   cls = 0
-  lcpEntry = null
-  fcpEntry = null
-  memoryBefore = performance.memory?.usedJSHeapSize || 0
-  memoryPeak = memoryBefore
 
-  // 5) Включаем наблюдателей
-  const perfObservers = setupPerformanceObservers()
+  // 5) Старт наблюдателей
+  const disconnectVitals = setupVitalsObservers()
 
-  // 6) Основной замер
+  // 6) Метка начала рендера таблицы
+  performance.mark('table-start')
+
+  // 7) Основная вставка данных
   status.value = 'Измерение...'
   const startTime = performance.now()
   data.value = generateDataset(props.size)
+  await nextTick()
+  await raf2()
+  const duration = performance.now() - startTime
 
-  // Мониторинг пиков памяти
-  const memInterval = setInterval(() => {
-    const used = performance.memory?.usedJSHeapSize || 0
-    if (used > memoryPeak) memoryPeak = used
-  }, 50)
+  // 8) Метка конца рендера таблицы
+  performance.mark('table-end')
+  performance.measure('tableRender', 'table-start', 'table-end')
+  const measure = performance.getEntriesByName('tableRender')[0]
+  const tableRenderDuration = measure ? measure.duration : duration
 
-  const renderEnd = await waitForAnimationFrame()
-  clearInterval(memInterval)
-  memoryAfter = performance.memory?.usedJSHeapSize || memoryAfter
+  // 9) Отключаем наблюдателей
+  disconnectVitals()
 
-  // 7) Отключаем наблюдателей
-  perfObservers.disconnect()
-
-  const duration = renderEnd - startTime
   return {
     duration,
+    tableRenderDuration,
     tbt,
     cls,
-    fcp: fcpEntry ? fcpEntry.startTime : 0,
-    lcp: lcpEntry ? lcpEntry.startTime : 0,
-    memoryBefore,
-    memoryAfter,
-    memoryPeak
+    timestamp: Date.now()
   }
 }
 
@@ -170,23 +128,25 @@ async function runTest() {
   try {
     const metrics = await measureRender()
 
-    if (!window.performanceResults) window.performanceResults = {}
-    if (!window.performanceResults.render) window.performanceResults.render = []
-
+    window.performanceResults = window.performanceResults || {}
+    window.performanceResults.render = window.performanceResults.render || []
     window.performanceResults.render.push({
       size: props.size,
-      ...metrics,
-      timestamp: Date.now()
+      ...metrics
     })
 
     console.log(
-      `Render test completed: ${props.size} items, duration ${metrics.duration.toFixed(2)}ms`,
+      `Render test completed: ${props.size} items` +
+      `, duration ${metrics.duration.toFixed(1)}ms` +
+      `, table LCP ${metrics.tableRenderDuration.toFixed(1)}ms` +
+      `, TBT ${metrics.tbt.toFixed(1)}ms` +
+      `, CLS ${metrics.cls.toFixed(4)}`,
       metrics
     )
-    status.value = `Готово: ${metrics.duration.toFixed(2)}ms`
-  } catch (error) {
-    console.error('Render test error:', error)
-    status.value = 'Ошибка: ' + error.message
+    status.value = `Готово: ${metrics.duration.toFixed(1)}ms`
+  } catch (err) {
+    console.error('Render test error:', err)
+    status.value = 'Ошибка: ' + err.message
   } finally {
     emit('test-completed')
   }
@@ -203,45 +163,36 @@ onMounted(runTest)
   border-radius: 8px;
   background-color: #f9f9f9;
 }
-
 .info {
   font-weight: bold;
   margin-bottom: 15px;
   padding-bottom: 10px;
   border-bottom: 1px solid #ddd;
-  position: relative;
 }
-
 .status {
   font-weight: normal;
   font-size: 0.9em;
   color: #666;
   margin-top: 5px;
 }
-
 table {
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
 }
-
-th,
-td {
+th, td {
   border: 1px solid #ddd;
   padding: 8px 12px;
   text-align: left;
 }
-
 th {
   background-color: #f2f2f2;
   position: sticky;
   top: 0;
 }
-
 tbody tr:nth-child(even) {
   background-color: #f8f8f8;
 }
-
 tbody tr:hover {
   background-color: #f0f7ff;
 }

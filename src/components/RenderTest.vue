@@ -1,10 +1,10 @@
 <template>
   <div class="render-test">
     <div class="info">
-      Тестирование рендеринга: {{ size }} элементов
+      Тестирование первичного рендера: {{ size }} элементов
       <div v-if="status" class="status">{{ status }}</div>
     </div>
-    <table v-if="data.length">
+    <table ref="tableRef" v-if="data.length">
       <thead>
         <tr>
           <th>ID</th>
@@ -29,124 +29,110 @@
 import { ref, onMounted, defineEmits, defineProps, nextTick } from 'vue'
 import { generateDataset } from '@/utils/perf'
 
-const props = defineProps({
-  size: {
-    type: Number,
-    required: true
-  }
-})
+const props = defineProps({ size: { type: Number, required: true } })
 const emit = defineEmits(['test-completed'])
 
 const data = ref([])
 const status = ref('')
+const tableRef = ref(null)
 
-// Core Web Vitals: TBT и CLS
 let tbt = 0
 let cls = 0
+let fcp = 0
+let lcp = 0
+let peakMemory = 0
 
-function setupVitalsObservers() {
-  const longTaskObs = new PerformanceObserver(list => {
-    for (const e of list.getEntries()) {
-      if (e.duration > 50) tbt += e.duration - 50
-    }
-  })
-  longTaskObs.observe({ type: 'longtask', buffered: true })
-
-  const clsObs = new PerformanceObserver(list => {
-    for (const e of list.getEntries()) {
-      if (!e.hadRecentInput) cls += e.value
-    }
-  })
-  clsObs.observe({ type: 'layout-shift', buffered: true })
-
-  return () => {
-    longTaskObs.disconnect()
-    clsObs.disconnect()
-  }
-}
-
-// Ждём два RAF, чтобы гарантировать конец отрисовки
 function raf2() {
-  return new Promise(r => {
-    requestAnimationFrame(() => requestAnimationFrame(r))
-  })
+  return new Promise(res => requestAnimationFrame(() => requestAnimationFrame(res)))
 }
 
 async function measureRender() {
-  // 1) Прогрев
   status.value = 'Прогрев...'
   data.value = generateDataset(props.size)
   await raf2()
 
-  // 2) Очистка
   status.value = 'Очистка...'
   data.value = []
   await raf2()
 
-  // 3) Сброс пользовательских меток
   performance.clearMarks()
   performance.clearMeasures()
+  tbt = 0; cls = 0; fcp = 0; lcp = 0; peakMemory = 0
 
-  // 4) Сброс Vitals
-  tbt = 0
-  cls = 0
+  // Инструменты
+  const longTaskObs = new PerformanceObserver(list => {
+    list.getEntries().forEach(e => { if (e.duration > 50) tbt += e.duration - 50 })
+  })
+  longTaskObs.observe({ type: 'longtask', buffered: true })
 
-  // 5) Старт наблюдателей
-  const disconnectVitals = setupVitalsObservers()
+  const clsObs = new PerformanceObserver(list => {
+    list.getEntries().forEach(e => { if (!e.hadRecentInput) cls += e.value })
+  })
+  clsObs.observe({ type: 'layout-shift', buffered: true })
 
-  // 6) Метка начала рендера таблицы
-  performance.mark('table-start')
+  // Снимок памяти до
+  const memSamples = []
+  function sampleMemory() {
+    if (performance.memory) memSamples.push(performance.memory.usedJSHeapSize)
+  }
 
-  // 7) Основная вставка данных
+  // Запуск замеров памяти каждые RAF в течение рендера
+  let memSampling = true
+  function memoryLoop() {
+    if (!memSampling) return
+    sampleMemory()
+    requestAnimationFrame(memoryLoop)
+  }
+
+  // Начало замеров
+  memSampling = true
+  memoryLoop()
+
+  performance.mark('start')
+  const start = performance.now()
   status.value = 'Измерение...'
-  const startTime = performance.now()
+
+  // Рендер данных
   data.value = generateDataset(props.size)
   await nextTick()
+  fcp = performance.now() - start
+
   await raf2()
-  const duration = performance.now() - startTime
+  lcp = performance.now() - start
 
-  // 8) Метка конца рендера таблицы
-  performance.mark('table-end')
-  performance.measure('tableRender', 'table-start', 'table-end')
-  const measure = performance.getEntriesByName('tableRender')[0]
-  const tableRenderDuration = measure ? measure.duration : duration
+  performance.mark('end')
+  performance.measure('render', 'start', 'end')
+  const measure = performance.getEntriesByName('render')[0]
+  const duration = measure.duration
 
-  // 9) Отключаем наблюдателей
-  disconnectVitals()
+  // Остановка замеров памяти
+  memSampling = false
+  peakMemory = memSamples.length ? Math.max(...memSamples) - (memSamples[0] || 0) : 0
 
-  return {
-    duration,
-    tableRenderDuration,
-    tbt,
-    cls,
-    timestamp: Date.now()
-  }
+  // Отключение обсерверов
+  longTaskObs.disconnect()
+  clsObs.disconnect()
+
+  return { duration, tbt, cls, fcp, lcp, peakMemory, timestamp: Date.now() }
 }
 
 async function runTest() {
   status.value = 'Подготовка...'
   try {
-    const metrics = await measureRender()
-
+    const m = await measureRender()
     window.performanceResults = window.performanceResults || {}
     window.performanceResults.render = window.performanceResults.render || []
-    window.performanceResults.render.push({
-      size: props.size,
-      ...metrics
-    })
+    window.performanceResults.render.push({ size: props.size, ...m })
 
     console.log(
-      `Render test completed: ${props.size} items` +
-      `, duration ${metrics.duration.toFixed(1)}ms` +
-      `, table LCP ${metrics.tableRenderDuration.toFixed(1)}ms` +
-      `, TBT ${metrics.tbt.toFixed(1)}ms` +
-      `, CLS ${metrics.cls.toFixed(4)}`,
-      metrics
+      `Render test completed: ${props.size} items, FCP ${m.fcp.toFixed(1)}ms, LCP ${m.lcp.toFixed(1)}ms, ` +
+      `TBT ${m.tbt.toFixed(1)}ms, CLS ${m.cls.toFixed(4)}, Duration ${m.duration.toFixed(1)}ms, ` +
+      `PeakMemory ${(m.peakMemory/1048576).toFixed(2)}MB`, m
     )
-    status.value = `Готово: ${metrics.duration.toFixed(1)}ms`
-  } catch (err) {
-    console.error('Render test error:', err)
-    status.value = 'Ошибка: ' + err.message
+    status.value = `Готово: ${m.duration.toFixed(1)}ms`
+  } catch (e) {
+    console.error('Render test error:', e)
+    status.value = 'Ошибка: ' + e.message
   } finally {
     emit('test-completed')
   }
@@ -156,44 +142,12 @@ onMounted(runTest)
 </script>
 
 <style scoped>
-.render-test {
-  margin: 20px 0;
-  padding: 15px;
-  border: 1px solid #eee;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-}
-.info {
-  font-weight: bold;
-  margin-bottom: 15px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #ddd;
-}
-.status {
-  font-weight: normal;
-  font-size: 0.9em;
-  color: #666;
-  margin-top: 5px;
-}
-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
-}
-th, td {
-  border: 1px solid #ddd;
-  padding: 8px 12px;
-  text-align: left;
-}
-th {
-  background-color: #f2f2f2;
-  position: sticky;
-  top: 0;
-}
-tbody tr:nth-child(even) {
-  background-color: #f8f8f8;
-}
-tbody tr:hover {
-  background-color: #f0f7ff;
-}
+.render-test { margin: 20px 0; padding: 15px; border: 1px solid #eee; border-radius: 8px; background: #f9f9f9; }
+.info { font-weight: bold; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #ddd; }
+.status { font-size: 0.9em; color: #666; margin-top: 5px; }
+table { width:100%; border-collapse:collapse; font-size:14px; margin-top:12px; }
+th, td { border:1px solid #ddd; padding:8px 12px; text-align:left; }
+th { background:#f2f2f2; position:sticky; top:0; }
+tbody tr:nth-child(even) { background:#f8f8f8; }
+tbody tr:hover { background:#f0f7ff; }
 </style>

@@ -3,37 +3,41 @@
     <div class="info">
       Тестирование первичного рендера: {{ size }} элементов
     </div>
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Value</th>
-          <th>Category</th>
-        </tr>
-      </thead>
-      <tbody v-if="data.length">
-        <tr v-for="item in data">
-          <td>{{ item.id }}</td>
-          <td>{{ item.name }}</td>
-          <!-- вычисление в шаблоне -->
-          <td>{{ parseFloat(item.value).toFixed(2) }}</td>
-          <td>{{ item.category }}</td>
-        </tr>
-      </tbody>
-    </table>
+
+    <div ref="contentWrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Value</th>
+            <th>Category</th>
+          </tr>
+        </thead>
+        <tbody v-if="data.length">
+          <tr v-for="item in data">
+            <td>{{ item.id }}</td>
+            <td>{{ item.name }}</td>
+          <td>{{ item.value.toFixed(2) }}</td>
+            <td>{{ item.category }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref, defineProps } from 'vue'
+import { ref, onMounted, defineProps } from 'vue'
 import { generateDataset } from '@/utils/perf'
 
-const props = defineProps({ size: Number })
-// синхронная генерация без onMounted
-const data = ref(generateDataset(props.size))
-</script>
+const props = defineProps({ size: { type: Number, required: true } })
+const data = ref([])
 
+onMounted(() => {
+  data.value = generateDataset(props.size)
+})
+</script>
 <style scoped>
 .render-test {
   margin: 20px 0;

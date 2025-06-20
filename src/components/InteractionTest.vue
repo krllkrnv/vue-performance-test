@@ -14,7 +14,6 @@
       <thead>
         <tr v-if="expandedRow !== null">
           <td colspan="4">
-            <transition name="fade">
               <div v-if="expandedRow !== null" class="details">
                 Подробности для {{
                   data.find(item => item.id === expandedRow)?.name || ''
@@ -23,7 +22,6 @@
                   (data.find(item => item.id === expandedRow)?.value || 0).toFixed(2)
                 }}
               </div>
-            </transition>
           </td>
         </tr>
         <tr>
@@ -58,7 +56,7 @@
 
 <script setup>
 import { ref, onMounted, defineEmits, defineProps } from 'vue'
-import { generateDataset } from '@/utils/perf'
+import { generateDataset } from '../../utils/perf'
 
 const props = defineProps({
   size: { type: Number, required: true },

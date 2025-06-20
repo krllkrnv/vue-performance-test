@@ -5,7 +5,7 @@
       Размер пакета: {{ size }} | Интервал: {{ interval }} мс
     </div>
 
-    <table v-if="data.length">
+    <table>
       <thead>
         <tr>
           <th>ID</th>
@@ -14,11 +14,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in data" :key="item.id">
-          <td>{{ item.id }}</td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.value.toFixed(2) }}</td>
-        </tr>
+        <template v-for="item in data">
+          <tr>
+            <td>{{ item.id }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.value.toFixed(2) }}</td>
+          </tr>
+        </template>
       </tbody>
     </table>
   </div>
@@ -46,7 +48,7 @@ function addBatch() {
 }
 
 onMounted(() => {
-  addBatch() // первичная загрузка
+  addBatch()
   timer = setInterval(addBatch, props.interval)
 })
 

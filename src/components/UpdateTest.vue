@@ -2,7 +2,7 @@
   <div class="realtime-test">
     <div class="info">
       Поступило записей: {{ data.length }}<br />
-      Размер пакета: {{ batchSize }} | Интервал: {{ interval }} мс
+      Размер пакета: {{ size }} | Интервал: {{ interval }} мс
     </div>
 
     <table v-if="data.length">
@@ -29,9 +29,9 @@ import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { generateDataset } from '@/utils/perf'
 
 const props = defineProps({
-  batchSize: { type: Number, default: 100 },
+  size: { type: Number, default: 100 },
   interval: { type: Number, default: 500 },
-  maxBatches: { type: Number, default: 20 } // Ограничение для Lighthouse
+  maxBatches: { type: Number, default: 10 }
 })
 
 const data = ref([])
@@ -39,7 +39,7 @@ let batchCount = 0
 let timer = null
 
 function addBatch() {
-  const newData = generateDataset(props.batchSize, data.value.length)
+  const newData = generateDataset(props.size, data.value.length)
   data.value.push(...newData)
   batchCount++
   if (batchCount >= props.maxBatches) clearInterval(timer)

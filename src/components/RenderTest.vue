@@ -3,7 +3,7 @@
     <div class="info">
       Тестирование первичного рендера: {{ size }} элементов
     </div>
-    <table v-if="data.length">
+    <table>
       <thead>
         <tr>
           <th>ID</th>
@@ -12,11 +12,12 @@
           <th>Category</th>
         </tr>
       </thead>
-      <tbody>
-        <tr v-for="item in data" :key="item.id">
+      <tbody v-if="data.length">
+        <tr v-for="item in data">
           <td>{{ item.id }}</td>
           <td>{{ item.name }}</td>
-          <td>{{ item.value.toFixed(2) }}</td>
+          <!-- вычисление в шаблоне -->
+          <td>{{ parseFloat(item.value).toFixed(2) }}</td>
           <td>{{ item.category }}</td>
         </tr>
       </tbody>
@@ -25,15 +26,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted, defineProps } from 'vue'
+import { ref, defineProps } from 'vue'
 import { generateDataset } from '@/utils/perf'
 
-const props = defineProps({ size: { type: Number, required: true } })
-const data = ref([])
-
-onMounted(() => {
-  data.value = generateDataset(props.size)
-})
+const props = defineProps({ size: Number })
+// синхронная генерация без onMounted
+const data = ref(generateDataset(props.size))
 </script>
 
 <style scoped>
@@ -58,6 +56,7 @@ table {
 }
 th, td {
   border: 1px solid #ddd;
+  /* inline-стиль для демонстрации */
   padding: 8px 12px;
   text-align: left;
 }

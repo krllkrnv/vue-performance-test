@@ -2,35 +2,39 @@
   "ci": {
     "collect": {
       "url": [
-        "http://localhost:4173/render/100",
-        "http://localhost:4173/render/1000",
-        "http://localhost:4173/render/5000",
-        "http://localhost:4173/render/10000",
-        "http://localhost:4173/update/100",
-        "http://localhost:4173/update/1000",
-        "http://localhost:4173/update/5000",
-        "http://localhost:4173/update/10000",
-        "http://localhost:4173/interaction/100",
-        "http://localhost:4173/interaction/1000",
-        "http://localhost:4173/interaction/5000",
-        "http://localhost:4173/interaction/10000"
-      ],
+  "http://localhost:4173/render/100",
+  "http://localhost:4173/render/500",
+  "http://localhost:4173/render/1000",
+  "http://localhost:4173/render/2000",
+  "http://localhost:4173/update/100",
+  "http://localhost:4173/update/500",
+  "http://localhost:4173/update/1000",
+  "http://localhost:4173/update/2000",
+  "http://localhost:4173/interaction/100",
+  "http://localhost:4173/interaction/500",
+  "http://localhost:4173/interaction/1000",
+  "http://localhost:4173/interaction/2000"
+]
+,
       "startServerCommand": "npm run build && npm run preview",
       "startServerReadyPattern": "Local:",
       "numberOfRuns": 3,
       "settings": {
         "chromeFlags": ["--headless=new", "--no-sandbox"],
-        "onlyCategories": ["performance"]
+        "onlyCategories": ["performance"],
+        "formFactor": "desktop",
+        "screenEmulation": { "disabled": true },
+        "emulatedUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
       }
     },
     "assert": {
       "assertions": {
-        "categories:performance": ["error", { "minScore": 0.5 }],
-        "first-contentful-paint": ["warn", { "maxNumericValue": 2500 }],
-        "speed-index": ["warn", { "maxNumericValue": 3000 }],
-        "largest-contentful-paint": ["warn", { "maxNumericValue": 3000 }],
-        "total-blocking-time": ["warn", { "maxNumericValue": 15000 }],
-        "cumulative-layout-shift": ["warn", { "maxNumericValue": 0.15 }]
+        "categories:performance": ["error", { "minScore": 0.9 }],
+        "first-contentful-paint": ["warn", { "maxNumericValue": 900 }],
+        "speed-index": ["warn", { "maxNumericValue": 1300 }],
+        "largest-contentful-paint": ["warn", { "maxNumericValue": 1200 }],
+        "total-blocking-time": ["warn", { "maxNumericValue": 200 }],
+        "cumulative-layout-shift": ["warn", { "maxNumericValue": 0.10 }]
       }
     },
     "upload": {

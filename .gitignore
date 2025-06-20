@@ -9,6 +9,7 @@ lerna-debug.log*
 
 node_modules
 .lighthouseci
+lighthouse-summary.csv
 .DS_Store
 dist
 dist-ssr

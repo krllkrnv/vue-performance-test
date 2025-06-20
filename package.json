@@ -11,6 +11,8 @@
     "lhci": "npm run lhci:collect && npm run lhci:assert"
   },
   "dependencies": {
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7",
     "vue": "^3.4.1",
     "vue-router": "^4.5.1"
   },

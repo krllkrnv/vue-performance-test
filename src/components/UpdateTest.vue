@@ -14,21 +14,18 @@
         </tr>
       </thead>
       <tbody>
-        <template v-for="item in data">
-          <tr>
-            <td>{{ item.id }}</td>
-            <td>{{ item.name }}</td>
-            <td>{{ item.value.toFixed(2) }}</td>
-          </tr>
-        </template>
+        <tr v-for="item in data">
+          <td>{{ item.id }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.value.toFixed(2) }}</td>
+        </tr>
       </tbody>
     </table>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
-import { generateDataset } from '@/utils/perf'
+import { ref, onMounted, onBeforeUnmount, defineProps, watch } from 'vue'
 
 const props = defineProps({
   size: { type: Number, default: 100 },
@@ -40,19 +37,42 @@ const data = ref([])
 let batchCount = 0
 let timer = null
 
-function addBatch() {
-  const newData = generateDataset(props.size, data.value.length)
-  data.value.push(...newData)
-  batchCount++
-  if (batchCount >= props.maxBatches) clearInterval(timer)
+async function addBatch() {
+  try {
+    const res = await fetch(`/data/dataset-${props.size}.json`)
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    const batch = await res.json()
+    const offset = data.value.length
+    const mapped = batch.map(item => ({
+      ...item,
+      id: item.id + offset
+    }))
+    data.value.push(...mapped)
+    batchCount++
+    if (batchCount >= props.maxBatches) {
+      clearInterval(timer)
+    }
+  } catch (err) {
+    console.error('Не удалось загрузить пакет данных:', err)
+    clearInterval(timer)
+  }
 }
 
-onMounted(() => {
+function startStreaming() {
+  data.value = []
+  batchCount = 0
+  clearInterval(timer)
   addBatch()
   timer = setInterval(addBatch, props.interval)
-})
+}
 
+onMounted(startStreaming)
 onBeforeUnmount(() => clearInterval(timer))
+
+watch(
+  () => [props.size, props.interval, props.maxBatches],
+  () => startStreaming()
+)
 </script>
 
 <style scoped>
@@ -61,6 +81,7 @@ onBeforeUnmount(() => clearInterval(timer))
   padding: 15px;
   border: 1px solid #ccc;
   border-radius: 8px;
+  background: #fafafa;
 }
 .info {
   margin-bottom: 10px;
@@ -69,9 +90,22 @@ onBeforeUnmount(() => clearInterval(timer))
 table {
   width: 100%;
   border-collapse: collapse;
+  font-size: 14px;
 }
 th, td {
   border: 1px solid #ddd;
   padding: 8px;
+  text-align: left;
+}
+thead th {
+  background: #f2f2f2;
+  position: sticky;
+  top: 0;
+}
+tbody tr:nth-child(even) {
+  background: #f8f8f8;
+}
+tbody tr:hover {
+  background: #eef7ff;
 }
 </style>

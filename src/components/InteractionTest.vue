@@ -14,14 +14,14 @@
       <thead>
         <tr v-if="expandedRow !== null">
           <td colspan="4">
-              <div v-if="expandedRow !== null" class="details">
-                Подробности для {{
-                  data.find(item => item.id === expandedRow)?.name || ''
-                }}:
-                значение {{
-                  (data.find(item => item.id === expandedRow)?.value || 0).toFixed(2)
-                }}
-              </div>
+            <div class="details">
+              Подробности для {{
+                data.find(item => item.id === expandedRow)?.name || ''
+              }}:
+              значение {{
+                (data.find(item => item.id === expandedRow)?.value || 0).toFixed(2)
+              }}
+            </div>
           </td>
         </tr>
         <tr>
@@ -55,8 +55,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, defineEmits, defineProps } from 'vue'
-import { generateDataset } from '../../utils/perf'
+import { ref, onMounted, defineEmits, defineProps, watch } from 'vue'
 
 const props = defineProps({
   size: { type: Number, required: true },
@@ -72,7 +71,8 @@ const sortAsc = ref(true)
 const expandedRow = ref(null)
 const status = ref('')
 
-const nextFrame = () => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))
+const nextFrame = () =>
+  new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))
 const sleep = ms => new Promise(r => setTimeout(r, ms))
 
 function applyFilter() {
@@ -100,12 +100,28 @@ function getDisplayData() {
 
   if (sortKey.value) {
     arr = [...arr].sort((a, b) => {
-      const result = a[sortKey.value] > b[sortKey.value] ? 1 : (a[sortKey.value] < b[sortKey.value] ? -1 : 0)
-      return sortAsc.value ? result : -result
+      const res = a[sortKey.value] > b[sortKey.value]
+        ? 1
+        : a[sortKey.value] < b[sortKey.value]
+        ? -1
+        : 0
+      return sortAsc.value ? res : -res
     })
   }
 
   return arr
+}
+
+async function fetchInitialData() {
+  try {
+    const res = await fetch(`/data/dataset-${props.size}.json`)
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    const json = await res.json()
+    data.value = json
+  } catch (err) {
+    console.error('Не удалось загрузить данные:', err)
+    data.value = []
+  }
 }
 
 async function measureAction(action) {
@@ -118,13 +134,18 @@ async function measureAction(action) {
 }
 
 async function runTest() {
-  await sleep(300)
+  status.value = ''
+  appliedFilter.value = ''
+  sortKey.value = ''
+  expandedRow.value = null
+
   status.value = 'Подготовка...'
+  await sleep(300)
+
+  await fetchInitialData()
+  await nextFrame()
 
   try {
-    data.value = generateDataset(props.size)
-    await nextFrame()
-
     for (let i = 0; i < props.cycles; i++) {
       status.value = `Цикл ${i + 1}/${props.cycles}`
       const idx = Math.floor(Math.random() * data.value.length)
@@ -137,6 +158,7 @@ async function runTest() {
           },
           reset: () => {
             appliedFilter.value = ''
+            filterText.value = ''
           }
         },
         {
@@ -167,6 +189,13 @@ async function runTest() {
 }
 
 onMounted(runTest)
+
+watch(
+  () => props.size,
+  () => {
+    runTest()
+  }
+)
 </script>
 
 <style scoped>
@@ -182,7 +211,6 @@ onMounted(runTest)
   margin-bottom: 15px;
   padding-bottom: 10px;
   border-bottom: 1px solid #ddd;
-  position: relative;
 }
 .status {
   font-weight: normal;
@@ -228,7 +256,6 @@ td {
 th {
   background-color: #f2f2f2;
   cursor: pointer;
-  position: relative;
   user-select: none;
 }
 th:hover {

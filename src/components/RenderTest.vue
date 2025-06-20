@@ -18,7 +18,7 @@
           <tr v-for="item in data">
             <td>{{ item.id }}</td>
             <td>{{ item.name }}</td>
-          <td>{{ item.value.toFixed(2) }}</td>
+            <td>{{ item.value.toFixed(2) }}</td>
             <td>{{ item.category }}</td>
           </tr>
         </tbody>
@@ -28,14 +28,33 @@
 </template>
 
 <script setup>
-import { ref, onMounted, defineProps } from 'vue'
-import { generateDataset } from '@/utils/perf'
+import { ref, watch, onMounted, defineProps } from 'vue'
 
-const props = defineProps({ size: { type: Number, required: true } })
+const props = defineProps({
+  size: {
+    type: Number,
+    required: true
+  }
+})
 const data = ref([])
 
+async function loadData(size) {
+  try {
+    const res = await fetch(`/data/dataset-${size}.json`)
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    data.value = await res.json()
+  } catch (err) {
+    console.error('Не удалось загрузить данные:', err)
+    data.value = []
+  }
+}
+
 onMounted(() => {
-  data.value = generateDataset(props.size)
+  loadData(props.size)
+})
+
+watch(() => props.size, newSize => {
+  loadData(newSize)
 })
 </script>
 <style scoped>

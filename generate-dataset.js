@@ -34,7 +34,7 @@ const formatSize = (size) => {
 }
 
 // Новые размеры датасетов
-const sizes = [100, 1000, 2000, 4000]
+const sizes = [100, 1000, 5000, 10000]
 
 // Путь к папке для сохранения
 const outputDir = path.resolve(process.cwd(), 'public', 'data')

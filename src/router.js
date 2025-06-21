@@ -3,7 +3,7 @@ import RenderTest from './components/RenderTest.vue'
 import UpdateTest from './components/UpdateTest.vue'
 import InteractionTest from './components/InteractionTest.vue'
 
-const testSizes = [100, 1000, 2000, 4000]
+const testSizes = [100, 1000, 5000, 10000]
 
 const routes = []
 

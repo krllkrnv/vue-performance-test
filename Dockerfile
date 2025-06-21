@@ -1,8 +1,8 @@
-FROM node:18
+FROM node:18-bullseye
 
-# Устанавливаем необходимые зависимости для Chromium
+# Устанавливаем Chromium и зависимости
 RUN apt-get update && apt-get install -y \
-    wget \
+    chromium \
     ca-certificates \
     fonts-liberation \
     libappindicator3-1 \
@@ -21,14 +21,38 @@ RUN apt-get update && apt-get install -y \
     xdg-utils \
     libgbm1 \
     libgtk-3-0 \
-    --no-install-recommends && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+    --no-install-recommends
+
+# Создаем пользователя
+RUN groupadd -r appuser && useradd -r -g appuser -G audio,video appuser
 
 WORKDIR /app
 
-COPY package.json .
-RUN npm install
+# Копируем package-файлы и устанавливаем зависимости
+COPY --chown=appuser:appuser package.json package-lock.json ./
 
-COPY . .
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* \
+    && npm ci \
+    && npm install -g @lhci/cli@0.15.0
 
-CMD ["npm", "run", "test:e2e"]
+# Устанавливаем Lighthouse CI
+RUN npm install -g @lhci/cli@0.15.0
+
+# Копируем код приложения и скрипт-агрегатор
+COPY --chown=appuser:appuser . .
+
+# Собираем приложение
+RUN npm run build
+
+# Флаги для Chrome
+ENV LHCI_CHROME_FLAGS="--headless --no-sandbox --disable-dev-shm-usage"
+
+# Переключаемся на пользователя
+USER appuser
+
+# Healthcheck (опционально)
+HEALTHCHECK --interval=30s --timeout=10s \
+  CMD curl -f http://localhost:3000/ || exit 1
+
+# Команда запуска
+CMD lhci autorun && node lh-aggregator.js

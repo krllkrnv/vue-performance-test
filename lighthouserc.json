@@ -4,16 +4,16 @@
       "url": [
         "http://localhost:4173/render/100",
         "http://localhost:4173/render/1000",
-        "http://localhost:4173/render/2000",
-        "http://localhost:4173/render/4000",
+        "http://localhost:4173/render/5000",
+        "http://localhost:4173/render/10000",
         "http://localhost:4173/update/100",
         "http://localhost:4173/update/1000",
-        "http://localhost:4173/update/2000",
-        "http://localhost:4173/update/4000",
+        "http://localhost:4173/update/5000",
+        "http://localhost:4173/update/10000",
         "http://localhost:4173/interaction/100",
         "http://localhost:4173/interaction/1000",
-        "http://localhost:4173/interaction/2000",
-        "http://localhost:4173/interaction/4000"
+        "http://localhost:4173/interaction/5000",
+        "http://localhost:4173/interaction/10000"
       ],
       "startServerCommand": "npm run build && npm run preview",
       "startServerReadyPattern": "http://localhost:4173",
@@ -25,7 +25,7 @@
         "throttling": {
           "rttMs": 40,
           "throughputKbps": 10240,
-          "cpuSlowdownMultiplier": 1
+          "cpuSlowdownMultiplier": 4
         },
         "disableStorageReset": false,
         "screenEmulation": {

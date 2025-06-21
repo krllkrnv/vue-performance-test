@@ -2,29 +2,42 @@
   "ci": {
     "collect": {
       "url": [
-  "http://localhost:4173/render/100",
-  "http://localhost:4173/render/500",
-  "http://localhost:4173/render/1000",
-  "http://localhost:4173/render/2000",
-  "http://localhost:4173/update/100",
-  "http://localhost:4173/update/500",
-  "http://localhost:4173/update/1000",
-  "http://localhost:4173/update/2000",
-  "http://localhost:4173/interaction/100",
-  "http://localhost:4173/interaction/500",
-  "http://localhost:4173/interaction/1000",
-  "http://localhost:4173/interaction/2000"
-]
-,
+        "http://localhost:4173/render/100",
+        "http://localhost:4173/render/1000",
+        "http://localhost:4173/render/2000",
+        "http://localhost:4173/render/4000",
+        "http://localhost:4173/update/100",
+        "http://localhost:4173/update/1000",
+        "http://localhost:4173/update/2000",
+        "http://localhost:4173/update/4000",
+        "http://localhost:4173/interaction/100",
+        "http://localhost:4173/interaction/1000",
+        "http://localhost:4173/interaction/2000",
+        "http://localhost:4173/interaction/4000"
+      ],
       "startServerCommand": "npm run build && npm run preview",
-      "startServerReadyPattern": "Local:",
+      "startServerReadyPattern": "http://localhost:4173",
+      "startServerRunTimeout": 60000,
       "numberOfRuns": 3,
       "settings": {
-        "chromeFlags": ["--headless=new", "--no-sandbox"],
+        "chromeFlags": ["--headless", "--no-sandbox"],
+        "throttlingMethod": "simulate",
+        "throttling": {
+          "rttMs": 40,
+          "throughputKbps": 10240,
+          "cpuSlowdownMultiplier": 1
+        },
+        "disableStorageReset": false,
+        "screenEmulation": {
+          "mobile": false,
+          "width": 1350,
+          "height": 940,
+          "deviceScaleFactor": 1,
+          "disabled": false
+        },
         "onlyCategories": ["performance"],
         "formFactor": "desktop",
-        "screenEmulation": { "disabled": true },
-        "emulatedUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+        "emulatedUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
       }
     },
     "assert": {

@@ -61,7 +61,6 @@ const props = defineProps({
   size: { type: Number, required: true },
   cycles: { type: Number, default: 5 }
 })
-const emit = defineEmits(['test-completed'])
 
 const data = ref([])
 const filterText = ref('')
@@ -181,7 +180,6 @@ async function runTest() {
     }
 
     status.value = 'Тестирование завершено!'
-    emit('test-completed')
   } catch (error) {
     console.error(error)
     status.value = 'Ошибка: ' + error.message

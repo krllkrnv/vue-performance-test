@@ -2,10 +2,7 @@
     <div id="app">
         <h1>Vue.js Performance Research</h1>
         <div class="test-container">
-            <router-view
-                :key="route.fullPath"
-                @test-completed="onTestCompleted"
-            />
+            <router-view :key="route.fullPath" />
         </div>
     </div>
 </template>
@@ -16,7 +13,7 @@
     const router = useRouter()
     const route = useRoute()
 
-    const testSizes = [100, 500, 1000, 2000]
+    const testSizes = [100, 1000, 2000, 4000]
     const scenarios = ['render', 'update', 'interaction']
 
     function onTestCompleted() {

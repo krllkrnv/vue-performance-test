@@ -15,12 +15,19 @@
         "http://localhost:4173/interaction/5000",
         "http://localhost:4173/interaction/10000"
       ],
-      "startServerCommand": "npm run build && npm run preview",
-      "startServerReadyPattern": "http://localhost:4173",
-      "startServerRunTimeout": 60000,
+      "startServerCommand": "npm run preview",
+      "startServerReadyPattern": "4173",
+      "startServerReadyTimeout": 60000,
       "numberOfRuns": 3,
       "settings": {
-        "chromeFlags": ["--headless", "--no-sandbox"],
+        "chromePath": "/usr/bin/chromium",
+        "chromeFlags": [
+  "--headless",
+  "--no-sandbox",
+  "--disable-setuid-sandbox",
+  "--disable-gpu"
+]
+,
         "throttlingMethod": "simulate",
         "throttling": {
           "rttMs": 40,

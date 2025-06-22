@@ -13,7 +13,7 @@
     const router = useRouter()
     const route = useRoute()
 
-    const testSizes = [100, 1000, 5000, 10000]
+    const testSizes = [100, 500, 1000, 2000, 3000]
     const scenarios = ['render', 'update', 'interaction']
 
     function onTestCompleted() {

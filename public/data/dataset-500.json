@@ -1,0 +1,3502 @@
+[
+  {
+    "id": 9606,
+    "name": "Item 9606",
+    "value": 7.467950377112508,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9607,
+    "name": "Item 9607",
+    "value": 15.501245287914578,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9608,
+    "name": "Item 9608",
+    "value": 80.24771457736881,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9609,
+    "name": "Item 9609",
+    "value": 87.54724219514081,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9610,
+    "name": "Item 9610",
+    "value": 45.91461484023153,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9611,
+    "name": "Item 9611",
+    "value": 53.74024336388141,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9612,
+    "name": "Item 9612",
+    "value": 37.98168499805071,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9613,
+    "name": "Item 9613",
+    "value": 43.96818875814626,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9614,
+    "name": "Item 9614",
+    "value": 88.18751738379447,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9615,
+    "name": "Item 9615",
+    "value": 37.43404780904013,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9616,
+    "name": "Item 9616",
+    "value": 22.43923288409475,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9617,
+    "name": "Item 9617",
+    "value": 16.291153599740614,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9618,
+    "name": "Item 9618",
+    "value": 97.46189308298008,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9619,
+    "name": "Item 9619",
+    "value": 47.39990288611725,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9620,
+    "name": "Item 9620",
+    "value": 71.72771594761697,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9621,
+    "name": "Item 9621",
+    "value": 69.35911786301527,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9622,
+    "name": "Item 9622",
+    "value": 93.056699907956,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9623,
+    "name": "Item 9623",
+    "value": 79.44073734843096,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9624,
+    "name": "Item 9624",
+    "value": 37.72205699423391,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9625,
+    "name": "Item 9625",
+    "value": 56.26835326487393,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9626,
+    "name": "Item 9626",
+    "value": 14.781481885667692,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9627,
+    "name": "Item 9627",
+    "value": 37.83969252495572,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9628,
+    "name": "Item 9628",
+    "value": 10.108811159666065,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9629,
+    "name": "Item 9629",
+    "value": 1.385108735305296,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9630,
+    "name": "Item 9630",
+    "value": 93.6766241060044,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9631,
+    "name": "Item 9631",
+    "value": 46.72713357934607,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9632,
+    "name": "Item 9632",
+    "value": 72.49218692134087,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9633,
+    "name": "Item 9633",
+    "value": 22.500168287944078,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9634,
+    "name": "Item 9634",
+    "value": 40.20322137657195,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9635,
+    "name": "Item 9635",
+    "value": 11.298588918852392,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9636,
+    "name": "Item 9636",
+    "value": 40.31793316986286,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9637,
+    "name": "Item 9637",
+    "value": 11.377748926311892,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9638,
+    "name": "Item 9638",
+    "value": 82.49343032013282,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9639,
+    "name": "Item 9639",
+    "value": 15.29483080544276,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9640,
+    "name": "Item 9640",
+    "value": 21.540056464926504,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9641,
+    "name": "Item 9641",
+    "value": 46.33659837144196,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9642,
+    "name": "Item 9642",
+    "value": 6.162203221403306,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9643,
+    "name": "Item 9643",
+    "value": 6.241604859904005,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9644,
+    "name": "Item 9644",
+    "value": 93.59652274517792,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9645,
+    "name": "Item 9645",
+    "value": 30.985302546675275,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9646,
+    "name": "Item 9646",
+    "value": 48.19785820261575,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9647,
+    "name": "Item 9647",
+    "value": 75.17757801917682,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9648,
+    "name": "Item 9648",
+    "value": 30.917843162992696,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9649,
+    "name": "Item 9649",
+    "value": 9.929264878882083,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9650,
+    "name": "Item 9650",
+    "value": 18.21121252835679,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9651,
+    "name": "Item 9651",
+    "value": 62.932242026098294,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9652,
+    "name": "Item 9652",
+    "value": 88.25780532857897,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9653,
+    "name": "Item 9653",
+    "value": 26.57875286818403,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9654,
+    "name": "Item 9654",
+    "value": 39.66308903457823,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9655,
+    "name": "Item 9655",
+    "value": 3.7008930174883825,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9656,
+    "name": "Item 9656",
+    "value": 32.81425034921768,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9657,
+    "name": "Item 9657",
+    "value": 28.48000637706155,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9658,
+    "name": "Item 9658",
+    "value": 70.91086360358216,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9659,
+    "name": "Item 9659",
+    "value": 37.78566394144634,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9660,
+    "name": "Item 9660",
+    "value": 67.55823340337571,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9661,
+    "name": "Item 9661",
+    "value": 80.43908211170924,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9662,
+    "name": "Item 9662",
+    "value": 82.2559404489506,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9663,
+    "name": "Item 9663",
+    "value": 37.645395616540156,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9664,
+    "name": "Item 9664",
+    "value": 70.0841461081391,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9665,
+    "name": "Item 9665",
+    "value": 18.49064281226902,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9666,
+    "name": "Item 9666",
+    "value": 96.84693736100498,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9667,
+    "name": "Item 9667",
+    "value": 34.099984991554955,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9668,
+    "name": "Item 9668",
+    "value": 32.71069893985536,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9669,
+    "name": "Item 9669",
+    "value": 31.607358996609314,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9670,
+    "name": "Item 9670",
+    "value": 2.10908090931905,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9671,
+    "name": "Item 9671",
+    "value": 6.365906957385848,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9672,
+    "name": "Item 9672",
+    "value": 68.78353933251206,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9673,
+    "name": "Item 9673",
+    "value": 23.569316016359654,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9674,
+    "name": "Item 9674",
+    "value": 74.33251373579112,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9675,
+    "name": "Item 9675",
+    "value": 91.971185293751,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9676,
+    "name": "Item 9676",
+    "value": 0.5566518761115358,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9677,
+    "name": "Item 9677",
+    "value": 88.13795486313079,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9678,
+    "name": "Item 9678",
+    "value": 42.55507740182135,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9679,
+    "name": "Item 9679",
+    "value": 57.511965355760964,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9680,
+    "name": "Item 9680",
+    "value": 46.81509931870351,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9681,
+    "name": "Item 9681",
+    "value": 30.911026348862592,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9682,
+    "name": "Item 9682",
+    "value": 13.273540857552346,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9683,
+    "name": "Item 9683",
+    "value": 90.2521366063605,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9684,
+    "name": "Item 9684",
+    "value": 73.29174211052246,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9685,
+    "name": "Item 9685",
+    "value": 60.67510990258987,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9686,
+    "name": "Item 9686",
+    "value": 56.83332095550563,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9687,
+    "name": "Item 9687",
+    "value": 50.77641530775742,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9688,
+    "name": "Item 9688",
+    "value": 84.83925026695854,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9689,
+    "name": "Item 9689",
+    "value": 6.763691746169121,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9690,
+    "name": "Item 9690",
+    "value": 16.587935633509975,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9691,
+    "name": "Item 9691",
+    "value": 51.13761701448535,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9692,
+    "name": "Item 9692",
+    "value": 84.67035071377788,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9693,
+    "name": "Item 9693",
+    "value": 54.35553511547663,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9694,
+    "name": "Item 9694",
+    "value": 95.24159790834416,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9695,
+    "name": "Item 9695",
+    "value": 85.8480419630845,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9696,
+    "name": "Item 9696",
+    "value": 39.00015625913542,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9697,
+    "name": "Item 9697",
+    "value": 56.01733927334277,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9698,
+    "name": "Item 9698",
+    "value": 57.641824641573194,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9699,
+    "name": "Item 9699",
+    "value": 39.3050269750711,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9700,
+    "name": "Item 9700",
+    "value": 24.18748776776667,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9701,
+    "name": "Item 9701",
+    "value": 60.61643581763977,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9702,
+    "name": "Item 9702",
+    "value": 88.86821382495019,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9703,
+    "name": "Item 9703",
+    "value": 92.65859191231081,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9704,
+    "name": "Item 9704",
+    "value": 39.400228689379816,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9705,
+    "name": "Item 9705",
+    "value": 30.279303823205638,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9706,
+    "name": "Item 9706",
+    "value": 34.1410478505939,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9707,
+    "name": "Item 9707",
+    "value": 96.18719976233605,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9708,
+    "name": "Item 9708",
+    "value": 13.079570918008375,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9709,
+    "name": "Item 9709",
+    "value": 31.546505332743358,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9710,
+    "name": "Item 9710",
+    "value": 30.469866892978704,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9711,
+    "name": "Item 9711",
+    "value": 61.69126783628472,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9712,
+    "name": "Item 9712",
+    "value": 90.51708513967377,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9713,
+    "name": "Item 9713",
+    "value": 16.52902976459828,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9714,
+    "name": "Item 9714",
+    "value": 74.9876851808705,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9715,
+    "name": "Item 9715",
+    "value": 17.645544242290235,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9716,
+    "name": "Item 9716",
+    "value": 78.95330938459601,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9717,
+    "name": "Item 9717",
+    "value": 15.746048274225455,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9718,
+    "name": "Item 9718",
+    "value": 32.5953135743136,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9719,
+    "name": "Item 9719",
+    "value": 45.445564470183044,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9720,
+    "name": "Item 9720",
+    "value": 3.6403534098651824,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9721,
+    "name": "Item 9721",
+    "value": 89.77265479882486,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9722,
+    "name": "Item 9722",
+    "value": 23.955183788205026,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9723,
+    "name": "Item 9723",
+    "value": 56.62582455807954,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9724,
+    "name": "Item 9724",
+    "value": 93.43097616829444,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9725,
+    "name": "Item 9725",
+    "value": 9.543345754483001,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9726,
+    "name": "Item 9726",
+    "value": 89.20103933467148,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9727,
+    "name": "Item 9727",
+    "value": 57.38124563580841,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9728,
+    "name": "Item 9728",
+    "value": 90.09083710018183,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9729,
+    "name": "Item 9729",
+    "value": 7.19656144167975,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9730,
+    "name": "Item 9730",
+    "value": 46.602903860180554,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9731,
+    "name": "Item 9731",
+    "value": 18.01658317460335,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9732,
+    "name": "Item 9732",
+    "value": 94.69908673782548,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9733,
+    "name": "Item 9733",
+    "value": 96.55440599625531,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9734,
+    "name": "Item 9734",
+    "value": 30.332940131598342,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9735,
+    "name": "Item 9735",
+    "value": 51.486512125978756,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9736,
+    "name": "Item 9736",
+    "value": 18.1644818729384,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9737,
+    "name": "Item 9737",
+    "value": 52.69118551077513,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9738,
+    "name": "Item 9738",
+    "value": 26.03580824145748,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9739,
+    "name": "Item 9739",
+    "value": 9.547567128716683,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9740,
+    "name": "Item 9740",
+    "value": 6.0314685241885435,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9741,
+    "name": "Item 9741",
+    "value": 0.8730558059784399,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9742,
+    "name": "Item 9742",
+    "value": 18.773180602181228,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9743,
+    "name": "Item 9743",
+    "value": 35.888350032799885,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9744,
+    "name": "Item 9744",
+    "value": 50.975189622153195,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9745,
+    "name": "Item 9745",
+    "value": 69.4350453797432,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9746,
+    "name": "Item 9746",
+    "value": 90.99377591513681,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9747,
+    "name": "Item 9747",
+    "value": 71.17281821617672,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9748,
+    "name": "Item 9748",
+    "value": 99.14673337439042,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9749,
+    "name": "Item 9749",
+    "value": 58.574407656162755,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9750,
+    "name": "Item 9750",
+    "value": 45.30217781073959,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9751,
+    "name": "Item 9751",
+    "value": 59.717856295775064,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9752,
+    "name": "Item 9752",
+    "value": 19.624503380018254,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9753,
+    "name": "Item 9753",
+    "value": 46.76292377559208,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9754,
+    "name": "Item 9754",
+    "value": 92.89837302548524,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9755,
+    "name": "Item 9755",
+    "value": 13.85854225948906,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9756,
+    "name": "Item 9756",
+    "value": 16.367364785547544,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9757,
+    "name": "Item 9757",
+    "value": 47.53427292917478,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9758,
+    "name": "Item 9758",
+    "value": 59.605435063810106,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9759,
+    "name": "Item 9759",
+    "value": 79.64106837815872,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9760,
+    "name": "Item 9760",
+    "value": 10.95577804127591,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9761,
+    "name": "Item 9761",
+    "value": 25.081510455028077,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9762,
+    "name": "Item 9762",
+    "value": 86.84060042126967,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9763,
+    "name": "Item 9763",
+    "value": 61.74712590429648,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9764,
+    "name": "Item 9764",
+    "value": 42.978751750298436,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9765,
+    "name": "Item 9765",
+    "value": 58.168998600640975,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9766,
+    "name": "Item 9766",
+    "value": 80.84965601605496,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9767,
+    "name": "Item 9767",
+    "value": 11.496787621273818,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9768,
+    "name": "Item 9768",
+    "value": 83.53284164836016,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9769,
+    "name": "Item 9769",
+    "value": 69.58518282727839,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9770,
+    "name": "Item 9770",
+    "value": 40.56333029962168,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9771,
+    "name": "Item 9771",
+    "value": 28.985289102202106,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9772,
+    "name": "Item 9772",
+    "value": 41.94321333296137,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9773,
+    "name": "Item 9773",
+    "value": 31.812932967131445,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9774,
+    "name": "Item 9774",
+    "value": 50.59765350901699,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9775,
+    "name": "Item 9775",
+    "value": 1.0872770803531884,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9776,
+    "name": "Item 9776",
+    "value": 12.603382506216787,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9777,
+    "name": "Item 9777",
+    "value": 20.089417875844873,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9778,
+    "name": "Item 9778",
+    "value": 58.49574736614292,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9779,
+    "name": "Item 9779",
+    "value": 92.2139865539446,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9780,
+    "name": "Item 9780",
+    "value": 80.7347225388286,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9781,
+    "name": "Item 9781",
+    "value": 70.96035939349628,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9782,
+    "name": "Item 9782",
+    "value": 48.18404211233309,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9783,
+    "name": "Item 9783",
+    "value": 46.50998949964226,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9784,
+    "name": "Item 9784",
+    "value": 19.331363542894497,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9785,
+    "name": "Item 9785",
+    "value": 56.28966021209719,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9786,
+    "name": "Item 9786",
+    "value": 96.13835243519631,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9787,
+    "name": "Item 9787",
+    "value": 80.43826687741982,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9788,
+    "name": "Item 9788",
+    "value": 80.21673943744948,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9789,
+    "name": "Item 9789",
+    "value": 82.27935804157698,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9790,
+    "name": "Item 9790",
+    "value": 28.26634481746664,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9791,
+    "name": "Item 9791",
+    "value": 97.96426455187697,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9792,
+    "name": "Item 9792",
+    "value": 46.45185231779628,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9793,
+    "name": "Item 9793",
+    "value": 50.50337624457837,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9794,
+    "name": "Item 9794",
+    "value": 45.97271074442381,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9795,
+    "name": "Item 9795",
+    "value": 4.9981249505617225,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9796,
+    "name": "Item 9796",
+    "value": 57.13454821639693,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9797,
+    "name": "Item 9797",
+    "value": 79.17500518830923,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9798,
+    "name": "Item 9798",
+    "value": 40.20746335414127,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9799,
+    "name": "Item 9799",
+    "value": 19.015117499587685,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9800,
+    "name": "Item 9800",
+    "value": 91.54191560335802,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9801,
+    "name": "Item 9801",
+    "value": 7.720717997023208,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9802,
+    "name": "Item 9802",
+    "value": 95.7178434621346,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9803,
+    "name": "Item 9803",
+    "value": 16.37053154879985,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9804,
+    "name": "Item 9804",
+    "value": 45.5858768062087,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9805,
+    "name": "Item 9805",
+    "value": 8.523588731106724,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9806,
+    "name": "Item 9806",
+    "value": 2.28418642184266,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9807,
+    "name": "Item 9807",
+    "value": 90.10082889857158,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9808,
+    "name": "Item 9808",
+    "value": 58.46484271304795,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9809,
+    "name": "Item 9809",
+    "value": 85.50578683154059,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9810,
+    "name": "Item 9810",
+    "value": 63.495325740371186,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9811,
+    "name": "Item 9811",
+    "value": 23.497960854618285,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9812,
+    "name": "Item 9812",
+    "value": 32.57902363731851,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9813,
+    "name": "Item 9813",
+    "value": 67.32784747557905,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9814,
+    "name": "Item 9814",
+    "value": 63.44408103308401,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9815,
+    "name": "Item 9815",
+    "value": 68.95825314379495,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9816,
+    "name": "Item 9816",
+    "value": 2.404774091702766,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9817,
+    "name": "Item 9817",
+    "value": 65.77763438544874,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9818,
+    "name": "Item 9818",
+    "value": 40.93567584331318,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9819,
+    "name": "Item 9819",
+    "value": 91.94273570092737,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9820,
+    "name": "Item 9820",
+    "value": 8.441652461426074,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9821,
+    "name": "Item 9821",
+    "value": 55.90129421214931,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9822,
+    "name": "Item 9822",
+    "value": 35.76281292405078,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9823,
+    "name": "Item 9823",
+    "value": 69.96649976500865,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9824,
+    "name": "Item 9824",
+    "value": 81.61767461228223,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9825,
+    "name": "Item 9825",
+    "value": 41.69685251449029,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9826,
+    "name": "Item 9826",
+    "value": 31.540243010901126,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9827,
+    "name": "Item 9827",
+    "value": 68.63409836021738,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9828,
+    "name": "Item 9828",
+    "value": 85.47481563862597,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9829,
+    "name": "Item 9829",
+    "value": 15.991624773482249,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9830,
+    "name": "Item 9830",
+    "value": 74.04592900161401,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9831,
+    "name": "Item 9831",
+    "value": 84.30103477507849,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9832,
+    "name": "Item 9832",
+    "value": 64.73953094636128,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9833,
+    "name": "Item 9833",
+    "value": 99.82413764851866,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9834,
+    "name": "Item 9834",
+    "value": 46.06423024357626,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9835,
+    "name": "Item 9835",
+    "value": 62.59846822828108,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9836,
+    "name": "Item 9836",
+    "value": 42.77374703281407,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9837,
+    "name": "Item 9837",
+    "value": 89.56891178028454,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9838,
+    "name": "Item 9838",
+    "value": 10.126923982629144,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9839,
+    "name": "Item 9839",
+    "value": 3.677922746223128,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9840,
+    "name": "Item 9840",
+    "value": 0.7360718505051489,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9841,
+    "name": "Item 9841",
+    "value": 42.5825785631941,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9842,
+    "name": "Item 9842",
+    "value": 46.13195284730046,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9843,
+    "name": "Item 9843",
+    "value": 39.912537669134466,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9844,
+    "name": "Item 9844",
+    "value": 9.352328725827096,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9845,
+    "name": "Item 9845",
+    "value": 47.84436754894719,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9846,
+    "name": "Item 9846",
+    "value": 94.77684675837234,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9847,
+    "name": "Item 9847",
+    "value": 64.51744378210223,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9848,
+    "name": "Item 9848",
+    "value": 38.48420318752829,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9849,
+    "name": "Item 9849",
+    "value": 10.776858592163618,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9850,
+    "name": "Item 9850",
+    "value": 83.66733438526384,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9851,
+    "name": "Item 9851",
+    "value": 90.76925188846062,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9852,
+    "name": "Item 9852",
+    "value": 26.0699293497335,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9853,
+    "name": "Item 9853",
+    "value": 20.40279810675082,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9854,
+    "name": "Item 9854",
+    "value": 61.60398996073039,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9855,
+    "name": "Item 9855",
+    "value": 97.46568442865545,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9856,
+    "name": "Item 9856",
+    "value": 95.30570406126185,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9857,
+    "name": "Item 9857",
+    "value": 3.539287542266656,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9858,
+    "name": "Item 9858",
+    "value": 12.726496083611538,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9859,
+    "name": "Item 9859",
+    "value": 71.53205098350843,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9860,
+    "name": "Item 9860",
+    "value": 39.83459567798001,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9861,
+    "name": "Item 9861",
+    "value": 46.67369323363456,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9862,
+    "name": "Item 9862",
+    "value": 27.790756650266424,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9863,
+    "name": "Item 9863",
+    "value": 24.35464519837508,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9864,
+    "name": "Item 9864",
+    "value": 79.05466562382684,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9865,
+    "name": "Item 9865",
+    "value": 61.446094223129485,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9866,
+    "name": "Item 9866",
+    "value": 30.59381268174909,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9867,
+    "name": "Item 9867",
+    "value": 7.122055354116363,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9868,
+    "name": "Item 9868",
+    "value": 27.015990657688103,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9869,
+    "name": "Item 9869",
+    "value": 71.11572098630413,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9870,
+    "name": "Item 9870",
+    "value": 76.47283875757867,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9871,
+    "name": "Item 9871",
+    "value": 62.51306671770136,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9872,
+    "name": "Item 9872",
+    "value": 64.79807492467485,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9873,
+    "name": "Item 9873",
+    "value": 8.859641272507234,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9874,
+    "name": "Item 9874",
+    "value": 46.844208899400606,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9875,
+    "name": "Item 9875",
+    "value": 52.109054478143925,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9876,
+    "name": "Item 9876",
+    "value": 43.98809792941768,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9877,
+    "name": "Item 9877",
+    "value": 50.11869400921112,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9878,
+    "name": "Item 9878",
+    "value": 95.83786588708261,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9879,
+    "name": "Item 9879",
+    "value": 36.777802665764916,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9880,
+    "name": "Item 9880",
+    "value": 28.633823176713356,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9881,
+    "name": "Item 9881",
+    "value": 99.95398245033898,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9882,
+    "name": "Item 9882",
+    "value": 2.8513439708193533,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9883,
+    "name": "Item 9883",
+    "value": 40.06817422141808,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9884,
+    "name": "Item 9884",
+    "value": 73.14230039519052,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9885,
+    "name": "Item 9885",
+    "value": 95.90843976397635,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9886,
+    "name": "Item 9886",
+    "value": 39.630899814462204,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9887,
+    "name": "Item 9887",
+    "value": 82.65254467888748,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9888,
+    "name": "Item 9888",
+    "value": 76.81980505094069,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9889,
+    "name": "Item 9889",
+    "value": 3.6620234045953826,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9890,
+    "name": "Item 9890",
+    "value": 37.92254765077146,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9891,
+    "name": "Item 9891",
+    "value": 78.70642810327641,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9892,
+    "name": "Item 9892",
+    "value": 68.72127054997623,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9893,
+    "name": "Item 9893",
+    "value": 79.18455567839567,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9894,
+    "name": "Item 9894",
+    "value": 13.088274369135533,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9895,
+    "name": "Item 9895",
+    "value": 70.4223720257328,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9896,
+    "name": "Item 9896",
+    "value": 43.96267145063596,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9897,
+    "name": "Item 9897",
+    "value": 6.963746955715655,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9898,
+    "name": "Item 9898",
+    "value": 87.04040909338192,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9899,
+    "name": "Item 9899",
+    "value": 25.403441891131628,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9900,
+    "name": "Item 9900",
+    "value": 68.82618010439342,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9901,
+    "name": "Item 9901",
+    "value": 56.205715701575784,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9902,
+    "name": "Item 9902",
+    "value": 33.10365968217608,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9903,
+    "name": "Item 9903",
+    "value": 58.938188874466626,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9904,
+    "name": "Item 9904",
+    "value": 16.547405790314016,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9905,
+    "name": "Item 9905",
+    "value": 61.11664664976141,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9906,
+    "name": "Item 9906",
+    "value": 39.95656748992936,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9907,
+    "name": "Item 9907",
+    "value": 87.44648735182483,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9908,
+    "name": "Item 9908",
+    "value": 86.13641166978103,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9909,
+    "name": "Item 9909",
+    "value": 81.04760083070734,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9910,
+    "name": "Item 9910",
+    "value": 87.38260772022643,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9911,
+    "name": "Item 9911",
+    "value": 79.71427075704105,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9912,
+    "name": "Item 9912",
+    "value": 97.65429017805158,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9913,
+    "name": "Item 9913",
+    "value": 32.3702426144143,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9914,
+    "name": "Item 9914",
+    "value": 93.26279050376635,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9915,
+    "name": "Item 9915",
+    "value": 5.710726341730155,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9916,
+    "name": "Item 9916",
+    "value": 55.266136593563054,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9917,
+    "name": "Item 9917",
+    "value": 63.15576260031559,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9918,
+    "name": "Item 9918",
+    "value": 69.35077866370423,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9919,
+    "name": "Item 9919",
+    "value": 3.7337182750635467,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9920,
+    "name": "Item 9920",
+    "value": 54.759160319463696,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9921,
+    "name": "Item 9921",
+    "value": 46.36123635251598,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9922,
+    "name": "Item 9922",
+    "value": 82.67628776673071,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9923,
+    "name": "Item 9923",
+    "value": 8.498002799646521,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9924,
+    "name": "Item 9924",
+    "value": 16.392603912866456,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9925,
+    "name": "Item 9925",
+    "value": 51.888153174358344,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9926,
+    "name": "Item 9926",
+    "value": 38.29824913946869,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9927,
+    "name": "Item 9927",
+    "value": 85.11558440771412,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9928,
+    "name": "Item 9928",
+    "value": 41.03891831086429,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9929,
+    "name": "Item 9929",
+    "value": 17.831481939089556,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9930,
+    "name": "Item 9930",
+    "value": 53.26295392530616,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9931,
+    "name": "Item 9931",
+    "value": 18.14600587184463,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9932,
+    "name": "Item 9932",
+    "value": 19.304972149529632,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9933,
+    "name": "Item 9933",
+    "value": 48.07593895873388,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9934,
+    "name": "Item 9934",
+    "value": 37.955535735529686,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9935,
+    "name": "Item 9935",
+    "value": 24.69498392471724,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9936,
+    "name": "Item 9936",
+    "value": 15.337992000293543,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9937,
+    "name": "Item 9937",
+    "value": 0.12781996139948903,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9938,
+    "name": "Item 9938",
+    "value": 16.646828028586736,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9939,
+    "name": "Item 9939",
+    "value": 92.49251098404537,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9940,
+    "name": "Item 9940",
+    "value": 94.90874157354904,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9941,
+    "name": "Item 9941",
+    "value": 19.359914658543055,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9942,
+    "name": "Item 9942",
+    "value": 25.84265298141535,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9943,
+    "name": "Item 9943",
+    "value": 64.94620855788249,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9944,
+    "name": "Item 9944",
+    "value": 24.110583150354657,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9945,
+    "name": "Item 9945",
+    "value": 16.972649612588476,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9946,
+    "name": "Item 9946",
+    "value": 31.255699554648743,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9947,
+    "name": "Item 9947",
+    "value": 60.01270088143842,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9948,
+    "name": "Item 9948",
+    "value": 83.37513122618275,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9949,
+    "name": "Item 9949",
+    "value": 36.588544320775796,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9950,
+    "name": "Item 9950",
+    "value": 37.59628361206823,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9951,
+    "name": "Item 9951",
+    "value": 59.61384368665791,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9952,
+    "name": "Item 9952",
+    "value": 30.29136639850072,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9953,
+    "name": "Item 9953",
+    "value": 84.49628935927113,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9954,
+    "name": "Item 9954",
+    "value": 10.066036386272003,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9955,
+    "name": "Item 9955",
+    "value": 11.541501151635869,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9956,
+    "name": "Item 9956",
+    "value": 20.728996891292883,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9957,
+    "name": "Item 9957",
+    "value": 67.4804002055832,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9958,
+    "name": "Item 9958",
+    "value": 59.7512186954796,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9959,
+    "name": "Item 9959",
+    "value": 11.512318761290652,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9960,
+    "name": "Item 9960",
+    "value": 20.805457588397815,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9961,
+    "name": "Item 9961",
+    "value": 52.96324748173704,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9962,
+    "name": "Item 9962",
+    "value": 53.430204674140356,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9963,
+    "name": "Item 9963",
+    "value": 62.13265202130429,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9964,
+    "name": "Item 9964",
+    "value": 44.04386414237295,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9965,
+    "name": "Item 9965",
+    "value": 62.340980955199534,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9966,
+    "name": "Item 9966",
+    "value": 94.96802872861451,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9967,
+    "name": "Item 9967",
+    "value": 19.760040161482408,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9968,
+    "name": "Item 9968",
+    "value": 68.46603436760958,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9969,
+    "name": "Item 9969",
+    "value": 7.879769474567,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9970,
+    "name": "Item 9970",
+    "value": 30.895752489476536,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9971,
+    "name": "Item 9971",
+    "value": 33.792229132636464,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9972,
+    "name": "Item 9972",
+    "value": 86.29768628616944,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9973,
+    "name": "Item 9973",
+    "value": 55.221793706943224,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9974,
+    "name": "Item 9974",
+    "value": 42.49997474080644,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9975,
+    "name": "Item 9975",
+    "value": 65.01049451135837,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9976,
+    "name": "Item 9976",
+    "value": 33.72053404532337,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9977,
+    "name": "Item 9977",
+    "value": 97.86351717894715,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9978,
+    "name": "Item 9978",
+    "value": 13.245205255181025,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9979,
+    "name": "Item 9979",
+    "value": 70.10706728196375,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9980,
+    "name": "Item 9980",
+    "value": 10.04203319965714,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9981,
+    "name": "Item 9981",
+    "value": 95.32274914912891,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9982,
+    "name": "Item 9982",
+    "value": 19.315436602420565,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9983,
+    "name": "Item 9983",
+    "value": 98.99054368206886,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9984,
+    "name": "Item 9984",
+    "value": 39.96718452705919,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9985,
+    "name": "Item 9985",
+    "value": 48.00271462795194,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9986,
+    "name": "Item 9986",
+    "value": 70.79435508740798,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9987,
+    "name": "Item 9987",
+    "value": 82.1010298081233,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9988,
+    "name": "Item 9988",
+    "value": 7.182708390858695,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9989,
+    "name": "Item 9989",
+    "value": 13.984738258545582,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9990,
+    "name": "Item 9990",
+    "value": 34.36578230277166,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9991,
+    "name": "Item 9991",
+    "value": 85.84854750229688,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9992,
+    "name": "Item 9992",
+    "value": 56.50429180930831,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9993,
+    "name": "Item 9993",
+    "value": 1.4301163347002266,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9994,
+    "name": "Item 9994",
+    "value": 25.56021046885858,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9995,
+    "name": "Item 9995",
+    "value": 32.099483306921094,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9996,
+    "name": "Item 9996",
+    "value": 66.12373729525345,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9997,
+    "name": "Item 9997",
+    "value": 93.64747472000727,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9998,
+    "name": "Item 9998",
+    "value": 96.60543457216558,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 9999,
+    "name": "Item 9999",
+    "value": 82.89656796693905,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10000,
+    "name": "Item 10000",
+    "value": 7.402532294625863,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10001,
+    "name": "Item 10001",
+    "value": 23.15517646262354,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10002,
+    "name": "Item 10002",
+    "value": 37.13130661853633,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10003,
+    "name": "Item 10003",
+    "value": 62.581681401288435,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10004,
+    "name": "Item 10004",
+    "value": 92.00894976117024,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10005,
+    "name": "Item 10005",
+    "value": 47.59057685875986,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10006,
+    "name": "Item 10006",
+    "value": 94.81100964245272,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10007,
+    "name": "Item 10007",
+    "value": 81.82012570717066,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10008,
+    "name": "Item 10008",
+    "value": 95.67861074251728,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10009,
+    "name": "Item 10009",
+    "value": 47.7565822203279,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10010,
+    "name": "Item 10010",
+    "value": 63.27399556313835,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10011,
+    "name": "Item 10011",
+    "value": 96.63400987065661,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10012,
+    "name": "Item 10012",
+    "value": 92.46021329485619,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10013,
+    "name": "Item 10013",
+    "value": 73.2811345544237,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10014,
+    "name": "Item 10014",
+    "value": 46.019278725866556,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10015,
+    "name": "Item 10015",
+    "value": 7.414480830856906,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10016,
+    "name": "Item 10016",
+    "value": 65.71429935102053,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10017,
+    "name": "Item 10017",
+    "value": 14.881553668589964,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10018,
+    "name": "Item 10018",
+    "value": 75.81994598918548,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10019,
+    "name": "Item 10019",
+    "value": 36.39783921636837,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10020,
+    "name": "Item 10020",
+    "value": 60.29511997906244,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10021,
+    "name": "Item 10021",
+    "value": 24.453009573326455,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10022,
+    "name": "Item 10022",
+    "value": 37.12355293235711,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10023,
+    "name": "Item 10023",
+    "value": 47.97528901161749,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10024,
+    "name": "Item 10024",
+    "value": 22.83995511095156,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10025,
+    "name": "Item 10025",
+    "value": 30.8074788696436,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10026,
+    "name": "Item 10026",
+    "value": 76.33744596852398,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10027,
+    "name": "Item 10027",
+    "value": 70.79944265828156,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10028,
+    "name": "Item 10028",
+    "value": 18.14004878230202,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10029,
+    "name": "Item 10029",
+    "value": 76.75950441088179,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10030,
+    "name": "Item 10030",
+    "value": 47.322982630077625,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10031,
+    "name": "Item 10031",
+    "value": 12.734196798193176,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10032,
+    "name": "Item 10032",
+    "value": 28.62290353143556,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10033,
+    "name": "Item 10033",
+    "value": 30.728765396647706,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10034,
+    "name": "Item 10034",
+    "value": 58.12552040301393,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10035,
+    "name": "Item 10035",
+    "value": 44.43973257490978,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10036,
+    "name": "Item 10036",
+    "value": 80.4825131518512,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10037,
+    "name": "Item 10037",
+    "value": 45.38027964603085,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10038,
+    "name": "Item 10038",
+    "value": 81.48233750905798,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10039,
+    "name": "Item 10039",
+    "value": 49.35664737899778,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10040,
+    "name": "Item 10040",
+    "value": 8.164572664442682,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10041,
+    "name": "Item 10041",
+    "value": 63.87096291108525,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10042,
+    "name": "Item 10042",
+    "value": 18.31935552018269,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10043,
+    "name": "Item 10043",
+    "value": 72.3944425100183,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10044,
+    "name": "Item 10044",
+    "value": 81.93848169571936,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10045,
+    "name": "Item 10045",
+    "value": 78.1916965448487,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10046,
+    "name": "Item 10046",
+    "value": 20.103374824748432,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10047,
+    "name": "Item 10047",
+    "value": 88.09271436342303,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10048,
+    "name": "Item 10048",
+    "value": 40.526443875361274,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10049,
+    "name": "Item 10049",
+    "value": 21.283262217263644,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10050,
+    "name": "Item 10050",
+    "value": 47.15745560180443,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10051,
+    "name": "Item 10051",
+    "value": 59.99257167575399,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10052,
+    "name": "Item 10052",
+    "value": 24.353497812006154,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10053,
+    "name": "Item 10053",
+    "value": 25.17361703237764,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10054,
+    "name": "Item 10054",
+    "value": 79.22755722852074,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10055,
+    "name": "Item 10055",
+    "value": 72.26610678838041,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10056,
+    "name": "Item 10056",
+    "value": 16.319275303296077,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10057,
+    "name": "Item 10057",
+    "value": 59.256348827062375,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10058,
+    "name": "Item 10058",
+    "value": 6.2470185891483565,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10059,
+    "name": "Item 10059",
+    "value": 78.86837866157491,
+    "category": "Category 2",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10060,
+    "name": "Item 10060",
+    "value": 62.57374498949563,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10061,
+    "name": "Item 10061",
+    "value": 53.63609133549269,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10062,
+    "name": "Item 10062",
+    "value": 24.033597925621862,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10063,
+    "name": "Item 10063",
+    "value": 41.16625990129916,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10064,
+    "name": "Item 10064",
+    "value": 83.32603439495759,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10065,
+    "name": "Item 10065",
+    "value": 1.4890134320163617,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10066,
+    "name": "Item 10066",
+    "value": 92.54983508173166,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10067,
+    "name": "Item 10067",
+    "value": 48.91858924798937,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10068,
+    "name": "Item 10068",
+    "value": 96.87166098767402,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10069,
+    "name": "Item 10069",
+    "value": 77.4700113078139,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10070,
+    "name": "Item 10070",
+    "value": 2.6176767879841467,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10071,
+    "name": "Item 10071",
+    "value": 54.35682706280818,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10072,
+    "name": "Item 10072",
+    "value": 52.615175366819365,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10073,
+    "name": "Item 10073",
+    "value": 89.53971465602147,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10074,
+    "name": "Item 10074",
+    "value": 72.79678030896555,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10075,
+    "name": "Item 10075",
+    "value": 87.57370596630842,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10076,
+    "name": "Item 10076",
+    "value": 73.92578156348019,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10077,
+    "name": "Item 10077",
+    "value": 59.90697513803034,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10078,
+    "name": "Item 10078",
+    "value": 74.82862663213477,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10079,
+    "name": "Item 10079",
+    "value": 58.520459670188984,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10080,
+    "name": "Item 10080",
+    "value": 3.4975065167347053,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10081,
+    "name": "Item 10081",
+    "value": 72.2239010070893,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10082,
+    "name": "Item 10082",
+    "value": 39.03714775528402,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10083,
+    "name": "Item 10083",
+    "value": 49.72192127483659,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10084,
+    "name": "Item 10084",
+    "value": 98.22993639613635,
+    "category": "Category 4",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10085,
+    "name": "Item 10085",
+    "value": 0.670713697201597,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10086,
+    "name": "Item 10086",
+    "value": 92.57542490249307,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10087,
+    "name": "Item 10087",
+    "value": 89.11095711239513,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10088,
+    "name": "Item 10088",
+    "value": 1.9780912117440708,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10089,
+    "name": "Item 10089",
+    "value": 91.82303453606292,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10090,
+    "name": "Item 10090",
+    "value": 23.547673658324484,
+    "category": "Category 0",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10091,
+    "name": "Item 10091",
+    "value": 14.649356029645944,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10092,
+    "name": "Item 10092",
+    "value": 22.2678306538155,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10093,
+    "name": "Item 10093",
+    "value": 80.2952890410143,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10094,
+    "name": "Item 10094",
+    "value": 33.56243760554366,
+    "category": "Category 3",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10095,
+    "name": "Item 10095",
+    "value": 46.50035237448513,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10096,
+    "name": "Item 10096",
+    "value": 46.90398585101978,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10097,
+    "name": "Item 10097",
+    "value": 93.43563408013142,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10098,
+    "name": "Item 10098",
+    "value": 10.57214632744088,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10099,
+    "name": "Item 10099",
+    "value": 45.62663676869686,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10100,
+    "name": "Item 10100",
+    "value": 41.48245453965217,
+    "category": "Category 8",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10101,
+    "name": "Item 10101",
+    "value": 31.51118590772245,
+    "category": "Category 1",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10102,
+    "name": "Item 10102",
+    "value": 47.54774628803209,
+    "category": "Category 5",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10103,
+    "name": "Item 10103",
+    "value": 81.6505816576975,
+    "category": "Category 9",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10104,
+    "name": "Item 10104",
+    "value": 17.998517069383446,
+    "category": "Category 7",
+    "timestamp": 1750600676987
+  },
+  {
+    "id": 10105,
+    "name": "Item 10105",
+    "value": 62.18613413935653,
+    "category": "Category 6",
+    "timestamp": 1750600676987
+  }
+]

@@ -79,7 +79,6 @@ table {
 }
 th, td {
   border: 1px solid #ddd;
-  /* inline-стиль для демонстрации */
   padding: 8px 12px;
   text-align: left;
 }

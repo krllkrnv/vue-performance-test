@@ -1,20 +1,23 @@
 {
   "ci": {
     "collect": {
-      "url": [
-        "http://localhost:4173/render/100",
-        "http://localhost:4173/render/1000",
-        "http://localhost:4173/render/5000",
-        "http://localhost:4173/render/10000",
-        "http://localhost:4173/update/100",
-        "http://localhost:4173/update/1000",
-        "http://localhost:4173/update/5000",
-        "http://localhost:4173/update/10000",
-        "http://localhost:4173/interaction/100",
-        "http://localhost:4173/interaction/1000",
-        "http://localhost:4173/interaction/5000",
-        "http://localhost:4173/interaction/10000"
-      ],
+    "url": [
+      "http://localhost:4173/render/100",
+      "http://localhost:4173/render/500",
+      "http://localhost:4173/render/1000",
+      "http://localhost:4173/render/2000",
+      "http://localhost:4173/render/3000",
+      "http://localhost:4173/update/100",
+      "http://localhost:4173/update/500",
+      "http://localhost:4173/update/1000",
+      "http://localhost:4173/update/2000",
+      "http://localhost:4173/update/3000",
+      "http://localhost:4173/interaction/100",
+      "http://localhost:4173/interaction/500",
+      "http://localhost:4173/interaction/1000",
+      "http://localhost:4173/interaction/2000",
+      "http://localhost:4173/interaction/3000"
+    ],
       "startServerCommand": "npm run preview",
       "startServerReadyPattern": "4173",
       "startServerReadyTimeout": 60000,
